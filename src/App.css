@@ -36,3 +36,63 @@
     transform: rotate(360deg);
   }
 }
+
+/*Image styling*/
+.banner-img {
+  width: 100%;
+  height: 405px;
+  object-fit: fill;
+  border-radius: 10px;
+}
+
+.detail-image {
+  width: 729px;
+  height: 742px;
+}
+
+/*Home*/
+.exercise-btn {
+  margin-top: 25px !important;
+  text-decoration: none !important;
+  width: 200px;
+  text-align: center;
+  color: white !important;
+  font-size: 18px !important;
+  text-transform: none !important;
+  border-radius: 4px !important;
+}
+
+/*Exercise buttons*/
+.pill {
+  padding: 7px 10px !important;
+  margin-top: 10px !important;
+  margin-right: 21px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  border-radius: 20px !important;
+  text-transform: uppercase !important;
+}
+
+.body-part-btn {
+  background-color: #0000FF !important;
+}
+
+.body-part-btn:hover {
+  background-color: #0000FF !important;
+}
+
+.target-muscle-btn {
+  background-color: #008000 !important;
+}
+
+.target-muscle-btn:hover {
+  background-color: #008000 !important;
+}
+
+.equipment-btn {
+  background-color: #A52A2A !important;
+}
+
+.equipment-btn:hover {
+  background-color: #A52A2A !important;
+}
