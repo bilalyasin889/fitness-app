@@ -17,7 +17,7 @@ import {Link} from "react-router-dom";
 const title = 'FIT-tastic'
 const pages = [
     {url: '/', name: 'Home'},
-    {url: '/exercise', name: 'Exercise'}
+    {url: '/exercises', name: 'Exercise'}
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 

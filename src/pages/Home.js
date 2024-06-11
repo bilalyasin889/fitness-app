@@ -22,7 +22,7 @@ const Home = () => {
                     guides.
                 </Typography>
                 <Stack>
-                    <Button variant="contained" component={Link} to="/exercise" className="exercise-btn">Browse Exercises</Button>
+                    <Button variant="contained" component={Link} to="/exercises" className="exercise-btn">Browse Exercises</Button>
                 </Stack>
             </Box>
         </Box>

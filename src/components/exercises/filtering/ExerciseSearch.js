@@ -1,35 +1,22 @@
-import React from 'react';
-import {Box, Button, TextField} from '@mui/material';
-import {getAllExercises, getExercisesByBodyPart} from "../../../http/exerciseData";
+import React, {useState} from 'react';
+import {Box, Button, InputAdornment, TextField} from '@mui/material';
 import {useDispatch, useSelector} from "react-redux";
-import {getBodyPartFilter, getSearchFilter, searchChanged, updateExercises} from "../../../store/exercises";
+import {getSearchFilter, searchChanged} from "../../../store/exercises";
+import IconButton from "@mui/material/IconButton";
+import {Clear} from "@mui/icons-material";
 
 const ExerciseSearch = () => {
     const dispatch = useDispatch();
-    const search = useSelector(getSearchFilter);
-    const bodyPartFilter = useSelector(getBodyPartFilter);
+    const searchFilter = useSelector(getSearchFilter);
+    const [searchInput, setSearchInput] = useState('');
 
     const handleSearch = async () => {
-        if (search) {
-            console.debug("Fetching and filtering search for list of exercises");
-            const result = bodyPartFilter === 'all' ?
-                await getAllExercises() :
-                await getExercisesByBodyPart(bodyPartFilter);
+        dispatch(searchChanged(searchInput.toLowerCase()));
+    };
 
-            if (result.error) {
-                console.error("Exercises.js - handleSearch(): Error retrieving all exercises.", result.error)
-            } else {
-                const searchedExercises = result.data.filter(
-                    (item) => item.name.toLowerCase().includes(search)
-                        || item.target.toLowerCase().includes(search)
-                        || item.equipment.toLowerCase().includes(search)
-                        || item.bodyPart.toLowerCase().includes(search)
-                );
-                window.scrollTo({top: 1800, left: 100, behavior: 'smooth'});
-                dispatch(searchChanged(''))
-                dispatch(updateExercises(searchedExercises));
-            }
-        }
+    const handleClear = async () => {
+        setSearchInput('');
+        dispatch(searchChanged(''));
     };
 
     return (
@@ -42,10 +29,21 @@ const ExerciseSearch = () => {
                     backgroundColor: '#fff',
                     borderRadius: '40px'
                 }}
-                value={search}
-                onChange={(e) => dispatch(searchChanged(e.target.value.toLowerCase()))}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search Exercises"
                 type="text"
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            {searchFilter && (
+                                <IconButton onClick={handleClear}>
+                                    <Clear />
+                                </IconButton>
+                            )}
+                        </InputAdornment>
+                    ),
+                }}
             />
             <Button className="search-btn" sx={{
                 backgroundColor: 'blue',

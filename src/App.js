@@ -6,12 +6,10 @@ import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import Exercises from "./pages/Exercises";
 import ExerciseInfo from "./pages/ExerciseInfo";
-import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
     return (
         <Box m="auto">
-            <ScrollToTop />
             <Navbar/>
             <Routes>
                 <Route path="/" element={<Home />} />

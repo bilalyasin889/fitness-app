@@ -1,14 +1,14 @@
 import {Box, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import {bodyPartFilterChanged, getBodyPartFilter, getBodyPartsList, updateBodyParts} from "../../../store/exercises";
-import React, {useEffect} from "react";
+import {bodyPartFilterChanged, getBodyPartFilter} from "../../../store/exercises";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
-import {getBodyParts} from "../../../http/exerciseData";
+import {getBodyParts} from "../../../utils/http/exerciseData";
 
 const BodyPartSelection = () => {
     const dispatch = useDispatch();
     const bodyPartFilter = useSelector(getBodyPartFilter);
-    const bodyParts = useSelector(getBodyPartsList);
+    const [bodyParts, setBodyParts] = useState([]);
 
     useEffect(() => {
         const fetchBodyParts = async () => {
@@ -16,20 +16,15 @@ const BodyPartSelection = () => {
             const result = await getBodyParts();
 
             if (result.error) {
-                console.error("Exercises.js - fetchBodyParts(): Error retrieving body parts.", result.error)
+                console.error("BodyPartSelection.js - fetchBodyParts(): Error retrieving body parts.", result.error)
             } else {
-                dispatch(updateBodyParts(['all', ...result.data]));
+                setBodyParts(['all', ...result.data]);
             }
         };
 
         fetchBodyParts();
-    }, [dispatch]);
-
-    const handleBodyPartChange = (event, newValue) => {
-        console.debug("Updating body part filter");
-
-        dispatch(bodyPartFilterChanged(newValue || 'all'));
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Box position="relative" mr="40px" ml="40px">
@@ -39,7 +34,7 @@ const BodyPartSelection = () => {
             <ToggleButtonGroup
                 value={bodyPartFilter}
                 exclusive
-                onChange={handleBodyPartChange}
+                onChange={(e) => dispatch(bodyPartFilterChanged(e.target.value))}
                 aria-label="Body Parts button group"
                 size="medium"
                 sx={{
@@ -52,39 +47,37 @@ const BodyPartSelection = () => {
                     },
                 }}
             >
-                {
-                    bodyParts.map((option) => (
-                        <ToggleButton
-                            key={option} value={option}
-                            aria-label={option}
-                            sx={{
-                                borderRadius: '8px',
-                                minWidth: '60px',
-                                height: '40px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '0 16px',
-                                border: '2px solid',
-                                borderColor: 'rgba(0, 0, 0, 0.23)',
-                                '&:not(:first-of-type)': {
-                                    borderLeft: '1px solid rgba(0, 0, 0, 0.23)',
-                                },
+                {bodyParts.map((option) => (
+                    <ToggleButton
+                        key={option} value={option}
+                        aria-label={option}
+                        sx={{
+                            borderRadius: '8px',
+                            minWidth: '60px',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '0 16px',
+                            border: '2px solid',
+                            borderColor: 'rgba(0, 0, 0, 0.23)',
+                            '&:not(:first-of-type)': {
+                                borderLeft: '1px solid rgba(0, 0, 0, 0.23)',
+                            },
+                            '&:hover': {
+                                backgroundColor: 'lightblue',
+                            },
+                            '&.Mui-selected': {
+                                backgroundColor: 'blue',
+                                color: 'white',
                                 '&:hover': {
-                                    backgroundColor: 'lightblue',
-                                },
-                                '&.Mui-selected': {
-                                    backgroundColor: 'blue',
-                                    color: 'white',
-                                    '&:hover': {
-                                        backgroundColor: 'dodgerblue',
-                                    }
+                                    backgroundColor: 'dodgerblue',
                                 }
-                            }}>
-                            {option}
-                        </ToggleButton>
-                    ))
-                }
+                            }
+                        }}>
+                        {option}
+                    </ToggleButton>
+                ))}
             </ToggleButtonGroup>
         </Box>
     );

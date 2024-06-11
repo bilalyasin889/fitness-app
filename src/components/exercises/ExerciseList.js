@@ -1,50 +1,24 @@
-import {useDispatch, useSelector} from "react-redux";
-import {
-    currentPageChanged,
-    getBodyPartFilter,
-    getCurrentPage,
-    getExercises,
-    getExercisesPerPage,
-    updateExercises
-} from "../../store/exercises";
-import {useEffect} from "react";
-import {getAllExercises, getExercisesByBodyPart} from "../../http/exerciseData";
 import {Box, CircularProgress, Pagination, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ExerciseCard from "./ExerciseCard";
+import {useSafeSetState} from "../../utils/SafeState";
+import {useSelector} from "react-redux";
+import {getExercises} from "../../store/exercises";
 
 const ExerciseList = () => {
-    const dispatch = useDispatch();
-    const currentPage = useSelector(getCurrentPage);
-    const exercisesPerPage = useSelector(getExercisesPerPage);
-
-    const bodyPartFilter = useSelector(getBodyPartFilter);
     const exerciseList = useSelector(getExercises);
 
-    useEffect(() => {
-        const fetchExercises = async () => {
-            console.debug("Fetching list of exercises");
-            const result = bodyPartFilter === 'all' ?
-                await getAllExercises() :
-                await getExercisesByBodyPart(bodyPartFilter);
-
-            if (result.error) {
-                console.error("ExerciseList.js - fetchExercises(): Error retrieving exercises.", result.error);
-            } else {
-                dispatch(updateExercises(result.data));
-            }
-        };
-
-        fetchExercises();
-    }, [bodyPartFilter, dispatch]);
-
     // Pagination
-    const indexOfLastExercise = currentPage * exercisesPerPage;
-    const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+    const [state, setState] = useSafeSetState({
+        currentPage: 1,
+        exercisesPerPage: 9
+    });
+    const indexOfLastExercise = state.currentPage * state.exercisesPerPage;
+    const indexOfFirstExercise = indexOfLastExercise - state.exercisesPerPage;
     const currentExercises = exerciseList.slice(indexOfFirstExercise, indexOfLastExercise);
 
     const paginate = (event, value) => {
-        dispatch(currentPageChanged(value));
+        setState({currentPage: value});
 
         window.scrollTo({top: 450, behavior: 'smooth'});
     };
@@ -54,7 +28,6 @@ const ExerciseList = () => {
             <CircularProgress/>
         </Box>
     );
-
 
     return (
         <Box id="exercises" mt="40px" p="20px">
@@ -73,8 +46,8 @@ const ExerciseList = () => {
                         color="standard"
                         shape="rounded"
                         defaultPage={1}
-                        count={Math.ceil(exerciseList.length / exercisesPerPage)}
-                        page={currentPage}
+                        count={Math.ceil(exerciseList.length / state.exercisesPerPage)}
+                        page={state.currentPage}
                         onChange={paginate}
                         size="large"
                     />

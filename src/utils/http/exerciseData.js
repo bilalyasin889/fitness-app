@@ -1,5 +1,5 @@
 import {getRequest} from "./utils";
-import {HOSTS, APPLICATION_URIS} from '../config/applicationUris';
+import {HOSTS, APPLICATION_URIS} from '../../config/applicationUris';
 
 const HOST = HOSTS.exerciseDB;
 const API_URIS = APPLICATION_URIS.exerciseDB;
