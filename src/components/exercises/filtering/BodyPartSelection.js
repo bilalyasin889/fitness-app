@@ -13,13 +13,14 @@ const BodyPartSelection = () => {
     useEffect(() => {
         const fetchBodyParts = async () => {
             console.debug("Fetching list of body parts");
-            const result = await getBodyParts();
-
-            if (result.error) {
-                console.error("BodyPartSelection.js - fetchBodyParts(): Error retrieving body parts.", result.error)
-            } else {
-                setBodyParts(['all', ...result.data]);
-            }
+            getBodyParts()
+                .then((response) => {
+                    setBodyParts(['all', ...response.data]);
+                })
+                .catch((error) => {
+                    console.error("BodyPartSelection.js - fetchBodyParts(): Error retrieving body parts.", error.message);
+                    setBodyParts(['all']);
+                });
         };
 
         fetchBodyParts();

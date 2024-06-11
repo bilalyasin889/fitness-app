@@ -7,6 +7,24 @@ import Tooltip from "@mui/material/Tooltip";
 import ExerciseCard from "../components/exercises/ExerciseCard";
 import {useSafeSetState} from "../utils/SafeState";
 
+const fetchExercisesByTargetMuscle = (targetMuscle) => {
+    return getExercisesByTargetMuscle(targetMuscle)
+        .then((response) => response.data.sort(() => Math.random() - 0.5).slice(0, 3))
+        .catch((error) => {
+            console.error("Error retrieving exercises by target muscle:", error.message);
+            return [];
+        });
+};
+
+const fetchExercisesByEquipment = (equipment) => {
+    return getExercisesByEquipment(equipment)
+        .then((response) => response.data.sort(() => Math.random() - 0.5).slice(0, 3))
+        .catch((error) => {
+            console.error("Error retrieving exercises by equipment:", error.message);
+            return [];
+        });
+};
+
 const ExerciseInfo = () => {
     const {id} = useParams();
     const [state, setState] = useSafeSetState({
@@ -17,31 +35,27 @@ const ExerciseInfo = () => {
 
     useEffect(() => {
         const fetchExerciseData = async () => {
-            try {
-                const exerciseResponse = await getExerciseById(id);
+            getExerciseById(id)
+                .then((response) => {
+                    const exerciseData = response.data;
+                    setState({ exercise: exerciseData });
 
-                if (exerciseResponse.error) {
-                    console.error("ExerciseInfo.js - fetchExerciseData(): Error retrieving exercise data.", exerciseResponse.error);
-                    return;
-                }
+                    if (!exerciseData.target || ! exerciseData.equipment) {
+                        console.error("ExerciseInfo.js - fetchExerciseData(): Exercise data does not contain correct information!");
+                        return;
+                    }
 
-                const exerciseData = exerciseResponse.data;
-                const [targetExercisesResponse, equipmentExercisesResponse] = await Promise.all([
-                    getExercisesByTargetMuscle(exerciseData.target),
-                    getExercisesByEquipment(exerciseData.equipment)
-                ]);
-
-                const targetExercises = targetExercisesResponse.error ? [] : targetExercisesResponse.data.sort(() => Math.random() - 0.5).slice(0, 3);
-                const equipmentExercises = equipmentExercisesResponse.error ? [] : equipmentExercisesResponse.data.sort(() => Math.random() - 0.5).slice(0, 3);
-
-                setState({
-                    exercise: exerciseData,
-                    targetExercises,
-                    equipmentExercises
+                    return Promise.all([
+                        fetchExercisesByTargetMuscle(exerciseData.target),
+                        fetchExercisesByEquipment(exerciseData.equipment)
+                    ]);
+                })
+                .then(([targetExercises, equipmentExercises]) => {
+                    setState({ targetExercises, equipmentExercises });
+                })
+                .catch((error) => {
+                    console.error("Error in fetching exercise data:", error.message);
                 });
-            } catch (error) {
-                console.error("ExerciseInfo.js - fetchExerciseData(): Unexpected error.", error);
-            }
         };
 
         fetchExerciseData();
@@ -86,7 +100,7 @@ const ExerciseInfo = () => {
                        flexWrap="wrap">
                     {state.targetExercises.length > 0 ? (
                         state.targetExercises.map((exercise) => (
-                            <ExerciseCard key={state.exercise.id} exercise={exercise}/>
+                            <ExerciseCard key={exercise.id} exercise={exercise}/>
                         ))
                     ) : (
                         <CircularProgress/>
@@ -103,7 +117,7 @@ const ExerciseInfo = () => {
                        flexWrap="wrap">
                     {state.equipmentExercises.length > 0 ? (
                         state.equipmentExercises.map((exercise) => (
-                            <ExerciseCard key={state.exercise.id} exercise={exercise}/>
+                            <ExerciseCard key={exercise.id} exercise={exercise}/>
                         ))
                     ) : (
                         <CircularProgress/>

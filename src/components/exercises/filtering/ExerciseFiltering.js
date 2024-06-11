@@ -14,23 +14,30 @@ const ExerciseFiltering = () => {
     useEffect(() => {
         const fetchExerciseData = async () => {
             console.debug("ExerciseFiltering.js - fetchExerciseData(): Fetching and filtering list of exercises");
-            const result = bodyPartFilter.toLowerCase() === 'all' ?
-                await getAllExercises() :
-                await getExercisesByBodyPart(bodyPartFilter);
+            try {
+                let result;
+                if (bodyPartFilter.toLowerCase() === 'all') {
+                    result = await getAllExercises();
+                } else {
+                    result = await getExercisesByBodyPart(bodyPartFilter);
+                }
 
-            if (result.error) {
-                console.error("ExerciseFiltering.js - fetchExerciseData(): Error retrieving all exercises.", result.error)
-            } else {
-                const searchedExercises = search ?
-                    result.data.filter(
+                const { error, data } = result;
+                if (error) {
+                    console.error("ExerciseFiltering.js - fetchExerciseData(): Error retrieving all exercises.", error);
+                } else {
+                    const searchedExercises = search ? data.filter(
                         (item) => item.name.toLowerCase().includes(search)
                             || item.target.toLowerCase().includes(search)
                             || item.equipment.toLowerCase().includes(search)
                             || item.bodyPart.toLowerCase().includes(search)
-                    ) :
-                    result.data;
-                window.scrollTo({top: 1800, left: 100, behavior: 'smooth'});
-                dispatch(updateExercises(searchedExercises));
+                    ) : data;
+
+                    window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
+                    dispatch(updateExercises(searchedExercises));
+                }
+            } catch (error) {
+                console.error("Error fetching exercise data:", error);
             }
         };
 
