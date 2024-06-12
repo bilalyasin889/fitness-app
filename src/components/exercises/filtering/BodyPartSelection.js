@@ -1,24 +1,22 @@
 import {Box, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import {bodyPartFilterChanged, getBodyPartFilter} from "../../../store/exercises";
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
 import Typography from "@mui/material/Typography";
+import {selector, useRecoilState, useRecoilValue} from "recoil";
+import {bodyPartFilterState} from "../../../recoil/ExerciseListAtoms";
 import {getBodyParts} from "../../../utils/http/exerciseData";
 
+const bodyPartsQuery = selector({
+    key: 'bodyPartsQuery',
+    get: async () => {
+        return await getBodyParts();
+    },
+});
+
 const BodyPartSelection = () => {
-    const dispatch = useDispatch();
-    const bodyPartFilter = useSelector(getBodyPartFilter);
-    const [bodyParts, setBodyParts] = useState([]);
+    const [bodyPartFilter, setBodyPartFilter] = useRecoilState(bodyPartFilterState);
+    const bodyParts = useRecoilValue(bodyPartsQuery);
 
-    useEffect(() => {
-        const fetchBodyParts = async () => {
-            console.debug("Fetching list of body parts");
-            setBodyParts(await getBodyParts());
-        };
-
-        fetchBodyParts();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    if (!bodyParts) return null;
 
     return (
         <Box position="relative" mr="40px" ml="40px">
@@ -28,7 +26,7 @@ const BodyPartSelection = () => {
             <ToggleButtonGroup
                 value={bodyPartFilter}
                 exclusive
-                onChange={(e) => dispatch(bodyPartFilterChanged(e.target.value))}
+                onChange={(e) => setBodyPartFilter(e.target.value)}
                 aria-label="Body Parts button group"
                 size="medium"
                 sx={{

@@ -62,13 +62,13 @@ const ExerciseInfo = () => {
                 </Typography>
                 <Stack direction='row' pr="10px" pl="10px" alignItems="center" sx={{gap: {lg: '20px', xs: '15px'}}}
                        flexWrap="wrap">
-                    {targetExercises.length > 0 ? (
-                        targetExercises.map((exercise) => (
-                            <ExerciseCard key={exercise.id} exercise={exercise}/>
-                        ))
-                    ) : (
-                        <CircularProgress/>
-                    )}
+                    {
+                        targetExercises.length > 0
+                            ? (targetExercises.map((exercise) => (
+                                <ExerciseCard key={exercise.id} exercise={exercise}/>
+                            )))
+                            : (<CircularProgress/>)
+                    }
                 </Stack>
             </Box>
 
@@ -79,13 +79,13 @@ const ExerciseInfo = () => {
                 </Typography>
                 <Stack direction='row' pr="10px" pl="10px" alignItems="center" sx={{gap: {lg: '20px', xs: '15px'}}}
                        flexWrap="wrap">
-                    {equipmentExercises.length > 0 ? (
-                        equipmentExercises.map((exercise) => (
-                            <ExerciseCard key={exercise.id} exercise={exercise}/>
-                        ))
-                    ) : (
-                        <CircularProgress/>
-                    )}
+                    {
+                        equipmentExercises.length > 0
+                            ? (equipmentExercises.map((exercise) => (
+                                <ExerciseCard key={exercise.id} exercise={exercise}/>
+                            )))
+                            : (<CircularProgress/>)
+                    }
                 </Stack>
             </Box>
         </Box>

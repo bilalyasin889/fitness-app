@@ -1,22 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Box, Button, InputAdornment, TextField} from '@mui/material';
-import {useDispatch, useSelector} from "react-redux";
-import {getSearchFilter, searchChanged} from "../../../store/exercises";
 import IconButton from "@mui/material/IconButton";
 import {Clear} from "@mui/icons-material";
+import {atom, useRecoilState} from "recoil";
+import {searchFilterState} from "../../../recoil/ExerciseListAtoms";
+
+const searchInputState = atom({
+    key: 'searchInputState',
+    default: '',
+});
 
 const ExerciseSearch = () => {
-    const dispatch = useDispatch();
-    const searchFilter = useSelector(getSearchFilter);
-    const [searchInput, setSearchInput] = useState('');
+    const [searchFilter, setSearchFilter] = useRecoilState(searchFilterState);
+    const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
     const handleSearch = async () => {
-        dispatch(searchChanged(searchInput.toLowerCase()));
+        setSearchFilter(searchInput.toLowerCase());
     };
 
     const handleClear = async () => {
         setSearchInput('');
-        dispatch(searchChanged(''));
+        setSearchFilter('');
     };
 
     return (
@@ -38,7 +42,7 @@ const ExerciseSearch = () => {
                         <InputAdornment position="start">
                             {searchFilter && (
                                 <IconButton onClick={handleClear}>
-                                    <Clear />
+                                    <Clear/>
                                 </IconButton>
                             )}
                         </InputAdornment>

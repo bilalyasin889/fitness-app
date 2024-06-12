@@ -10,7 +10,7 @@ const Home = () => {
     return (
         <Box>
             <Box sx={{mt: '30px'}} position="relative" p="20px">
-                <img style={{resizeMode: 'contain'}} src={BannerImage} alt="banner" className="banner-img"/>
+                <img style={{objectFit: 'contain'}} src={BannerImage} alt="banner" className="banner-img"/>
             </Box>
             <Box position="relative" pl="25px" pr="25px" mt="25px">
                 <Typography color="#FF2625" variation="h1" fontWeight={700} mb="20px" sx={{fontSize: {lg: '50px', xs: '30px'}}}>

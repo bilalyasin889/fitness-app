@@ -1,18 +1,20 @@
-import {Box, CircularProgress, Pagination, Stack} from "@mui/material";
+import {Box, Pagination, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ExerciseCard from "./ExerciseCard";
 import {useSafeSetState} from "../../utils/SafeState";
-import {useSelector} from "react-redux";
-import {getExercises} from "../../store/exercises";
+import {filteredExercisesState} from "../../recoil/ExerciseListAtoms";
+import {useRecoilValue} from "recoil";
 
 const ExerciseList = () => {
-    const exerciseList = useSelector(getExercises);
-
-    // Pagination
     const [state, setState] = useSafeSetState({
         currentPage: 1,
         exercisesPerPage: 9
     });
+    const exerciseList = useRecoilValue(filteredExercisesState);
+
+    if (!exerciseList) return null;
+
+    // Pagination
     const indexOfLastExercise = state.currentPage * state.exercisesPerPage;
     const indexOfFirstExercise = indexOfLastExercise - state.exercisesPerPage;
     const currentExercises = exerciseList.slice(indexOfFirstExercise, indexOfLastExercise);
@@ -23,11 +25,7 @@ const ExerciseList = () => {
         window.scrollTo({top: 450, behavior: 'smooth'});
     };
 
-    if (!currentExercises.length) return (
-        <Box sx={{mt: {lg: '109px'}}} mt="50px" p="20px">
-            <CircularProgress/>
-        </Box>
-    );
+    if (!currentExercises.length) return null
 
     return (
         <Box id="exercises" mt="40px" p="20px">
