@@ -16,7 +16,8 @@ const ExerciseList = () => {
         return null;
     } else if (exerciseList.length === 0) {
         return (
-            <Typography variant="h5" sx={{fontSize: {lg: '25px', xs: '20px'}}} display="flex" justifyContent="center" alignItems="center" mb="46px">
+            <Typography variant="h5" sx={{fontSize: {lg: '25px', xs: '20px'}}} display="flex" justifyContent="center"
+                        alignItems="center" mb="46px">
                 No exercises found
             </Typography>
         );
@@ -37,13 +38,18 @@ const ExerciseList = () => {
 
     return (
         <Box>
-            <Stack direction={{xs: 'column', lg: 'row'}} pr="30px" pl="30px" alignItems="center"
-                   sx={{gap: {lg: '50px', xs: '25px'}}} flexWrap="wrap" justifyContent="center">
+            <Stack direction={{xs: 'column', lg: 'row'}}
+                   pr="30px" pl="30px"
+                   display="flex"
+                   justifyContent="space-around"
+                   alignContent={{xs: 'space-around', md: 'space-between'}}
+                   flexWrap="wrap"
+                   sx={{gap: {lg: '20px', xs: '15px'}}}>
                 {currentExercises.map((exercise) => (
                     <ExerciseCard key={exercise.id} exercise={exercise}/>
                 ))}
             </Stack>
-            <Stack sx={{mt: {lg: '114px', xs: '70px'}}} alignItems="center">
+            <Stack sx={{mt: {lg: '50px', xs: '20px'}}} alignItems="center">
                 {exerciseList.length > 9 && (
                     <Pagination
                         color="standard"

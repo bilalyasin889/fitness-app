@@ -22,14 +22,12 @@ const ExerciseCard = ({exercise}) => {
                 sx={{
                     border: '1px solid #ccc',
                     borderRadius: '8px',
-                    padding: '16px',
                     display: 'flex',
+                    flex: '0 450px',
                     alignItems: 'center',
                     textDecoration: 'none',
-                    height: '40%',
-                    maxHeight: '220px',
-                    width: '100%',
-                    maxWidth: {xs: '440px', md: '440px'},
+                    height: '100%',
+                    width: {md: '510px', xs: '350px'},
                     overflow: 'hidden',
                 }}
             >
@@ -41,7 +39,7 @@ const ExerciseCard = ({exercise}) => {
                         width: {xs: 100, lg: 150},
                         height: {xs: 100, lg: 150},
                         borderRadius: '50%',
-                        marginRight: '16px',
+                        margin: '10px 15px',
                     }}
                 />
                 <Divider orientation="vertical" variant="middle" flexItem sx={{marginRight: '21px'}}/>
