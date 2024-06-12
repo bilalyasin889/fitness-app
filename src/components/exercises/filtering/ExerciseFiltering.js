@@ -14,30 +14,21 @@ const ExerciseFiltering = () => {
     useEffect(() => {
         const fetchExerciseData = async () => {
             console.debug("ExerciseFiltering.js - fetchExerciseData(): Fetching and filtering list of exercises");
-            try {
-                let result;
-                if (bodyPartFilter.toLowerCase() === 'all') {
-                    result = await getAllExercises();
-                } else {
-                    result = await getExercisesByBodyPart(bodyPartFilter);
-                }
+            let result;
+            result = bodyPartFilter.toLowerCase() === 'all' ?
+                await getAllExercises() :
+                await getExercisesByBodyPart(bodyPartFilter);
 
-                const { error, data } = result;
-                if (error) {
-                    console.error("ExerciseFiltering.js - fetchExerciseData(): Error retrieving all exercises.", error);
-                } else {
-                    const searchedExercises = search ? data.filter(
-                        (item) => item.name.toLowerCase().includes(search)
-                            || item.target.toLowerCase().includes(search)
-                            || item.equipment.toLowerCase().includes(search)
-                            || item.bodyPart.toLowerCase().includes(search)
-                    ) : data;
+            if (result) {
+                const searchedExercises = search ? result.filter(
+                    (item) => item.name.toLowerCase().includes(search)
+                        || item.target.toLowerCase().includes(search)
+                        || item.equipment.toLowerCase().includes(search)
+                        || item.bodyPart.toLowerCase().includes(search)
+                ) : result;
 
-                    window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
-                    dispatch(updateExercises(searchedExercises));
-                }
-            } catch (error) {
-                console.error("Error fetching exercise data:", error);
+                window.scrollTo({top: 1800, left: 100, behavior: 'smooth'});
+                dispatch(updateExercises(searchedExercises));
             }
         };
 

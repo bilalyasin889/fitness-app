@@ -7,24 +7,6 @@ import Tooltip from "@mui/material/Tooltip";
 import ExerciseCard from "../components/exercises/ExerciseCard";
 import {useSafeSetState} from "../utils/SafeState";
 
-const fetchExercisesByTargetMuscle = (targetMuscle) => {
-    return getExercisesByTargetMuscle(targetMuscle)
-        .then((response) => response.data.sort(() => Math.random() - 0.5).slice(0, 3))
-        .catch((error) => {
-            console.error("Error retrieving exercises by target muscle:", error.message);
-            return [];
-        });
-};
-
-const fetchExercisesByEquipment = (equipment) => {
-    return getExercisesByEquipment(equipment)
-        .then((response) => response.data.sort(() => Math.random() - 0.5).slice(0, 3))
-        .catch((error) => {
-            console.error("Error retrieving exercises by equipment:", error.message);
-            return [];
-        });
-};
-
 const ExerciseInfo = () => {
     const {id} = useParams();
     const [state, setState] = useSafeSetState({
@@ -35,27 +17,19 @@ const ExerciseInfo = () => {
 
     useEffect(() => {
         const fetchExerciseData = async () => {
-            getExerciseById(id)
-                .then((response) => {
-                    const exerciseData = response.data;
-                    setState({ exercise: exerciseData });
+            const exerciseData = await getExerciseById(id);
+            if (exerciseData) {
+                setState({ exercise: exerciseData });
 
-                    if (!exerciseData.target || ! exerciseData.equipment) {
-                        console.error("ExerciseInfo.js - fetchExerciseData(): Exercise data does not contain correct information!");
-                        return;
-                    }
+                if (!exerciseData.target || ! exerciseData.equipment) {
+                    console.error("ExerciseInfo.js - fetchExerciseData(): Exercise data does not contain correct information!");
+                    return;
+                }
 
-                    return Promise.all([
-                        fetchExercisesByTargetMuscle(exerciseData.target),
-                        fetchExercisesByEquipment(exerciseData.equipment)
-                    ]);
-                })
-                .then(([targetExercises, equipmentExercises]) => {
-                    setState({ targetExercises, equipmentExercises });
-                })
-                .catch((error) => {
-                    console.error("Error in fetching exercise data:", error.message);
-                });
+                const targetExercises = await getExercisesByTargetMuscle(exerciseData.target);
+                const equipmentExercises = await getExercisesByEquipment(exerciseData.equipment);
+                setState({ targetExercises, equipmentExercises });
+            }
         };
 
         fetchExerciseData();
