@@ -1,0 +1,44 @@
+.filter-heading {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.selection-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+}
+
+.selection-container .MuiToggleButton-root {
+    border-radius: 20px !important;
+}
+
+.selection-button {
+    border-radius: 8px !important;
+    min-width: 60px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 16px !important;
+    border: 2px solid rgba(0, 0, 0, 0.23) !important;
+}
+
+.selection-button:not(:first-of-type) {
+    border-left: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.selection-button:hover {
+    background-color: lightblue !important;
+}
+
+.selection-button.Mui-selected {
+    background-color: blue !important;
+    color: white !important;
+}
+
+.selection-button.Mui-selected:hover {
+    background-color: dodgerblue !important;
+}

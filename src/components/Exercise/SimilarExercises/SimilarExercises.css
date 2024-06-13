@@ -1,0 +1,18 @@
+.similar-exercises-heading {
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+    span {
+        color: #FF2625;
+    }
+}
+
+/* Specific Styles for Similar Exercise Flex Grid */
+.similar-exercises-flex-grid {
+    padding-right: 10px;
+    justify-content: flex-start;
+    align-content: flex-start;
+}

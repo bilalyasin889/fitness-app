@@ -1,7 +1,8 @@
-import {Box, Pagination, Stack, Typography} from "@mui/material";
-import ExerciseCard from "./ExerciseCard";
-import {useSafeSetState} from "../../utils/SafeState";
-import {filteredExercisesState} from "../../recoil/ExerciseListAtoms";
+import './ExerciseList.css'
+import {Box, Pagination, Stack} from "@mui/material";
+import ExerciseCard from "../ExerciseCard/ExerciseCard";
+import {useSafeSetState} from "../../../utils/SafeState";
+import {filteredExercisesState} from "../../../recoil/ExerciseListAtoms";
 import {useRecoilValue} from "recoil";
 import React from "react";
 
@@ -16,10 +17,9 @@ const ExerciseList = () => {
         return null;
     } else if (exerciseList.length === 0) {
         return (
-            <Typography variant="h5" sx={{fontSize: {lg: '25px', xs: '20px'}}} display="flex" justifyContent="center"
-                        alignItems="center" mb="46px">
+            <h5 className="no-exercise-found">
                 No exercises found
-            </Typography>
+            </h5>
         );
     }
 
@@ -38,13 +38,7 @@ const ExerciseList = () => {
 
     return (
         <Box>
-            <Stack direction={{xs: 'column', lg: 'row'}}
-                   pr="30px" pl="30px"
-                   display="flex"
-                   justifyContent="space-around"
-                   alignContent={{xs: 'space-around', md: 'space-between'}}
-                   flexWrap="wrap"
-                   sx={{gap: {lg: '20px', xs: '15px'}}}>
+            <Stack className="flex-grid exercises-flex-grid">
                 {currentExercises.map((exercise) => (
                     <ExerciseCard key={exercise.id} exercise={exercise}/>
                 ))}

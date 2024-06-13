@@ -3,9 +3,9 @@ import {Box} from "@mui/material";
 import Navbar from "./components/Navbar";
 import React from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import Home from "./pages/Home";
-import Exercises from "./pages/Exercises";
-import ExerciseInfo from "./pages/ExerciseInfo";
+import Home from "./pages/Home/Home";
+import Exercises from "./pages/Exercises/Exercises";
+import ExerciseInfo from "./pages/ExerciseInfo/ExerciseInfo";
 import {LoadingSpinner} from "./components/LoadingSpinner";
 
 function App() {

@@ -1,0 +1,17 @@
+.exercise-img-wrapper {
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+
+    img  {
+        max-height: 50vh;
+        width: 50vh;
+    }
+}
+
+.instructions-heading {
+    font-weight: 600;
+    font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
