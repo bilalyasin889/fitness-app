@@ -13,14 +13,6 @@
     }
 }
 
-.result-title {
-    text-transform: capitalize;
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 35px;
-    margin-top: 0;
-}
-
 .exercise-btn {
     margin-top: 25px !important;
     text-decoration: none !important;
