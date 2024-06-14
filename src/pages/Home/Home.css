@@ -1,0 +1,25 @@
+.home-wrapper {
+    display: grid;
+    place-content: center;
+    margin: 0;
+
+    img {
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 90vw;
+        max-height: 50vh;
+        object-fit: fill !important;
+        border-radius: 30px;
+    }
+}
+
+.exercise-btn {
+    margin-top: 25px !important;
+    text-decoration: none !important;
+    width: 200px;
+    text-align: center;
+    color: white !important;
+    font-size: 18px !important;
+    text-transform: none !important;
+    border-radius: 4px !important;
+}

@@ -1,16 +1,17 @@
+import './SearchExercise.css'
 import React from 'react';
 import {Box, Button, InputAdornment, TextField} from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import {Clear} from "@mui/icons-material";
 import {atom, useRecoilState} from "recoil";
-import {searchFilterState} from "../../../recoil/ExerciseListAtoms";
+import {searchFilterState} from "../../../../recoil/ExerciseListAtoms";
 
 const searchInputState = atom({
     key: 'searchInputState',
     default: '',
 });
 
-const ExerciseSearch = () => {
+const SearchExercise = () => {
     const [searchFilter, setSearchFilter] = useRecoilState(searchFilterState);
     const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
@@ -24,15 +25,9 @@ const ExerciseSearch = () => {
     };
 
     return (
-        <Box position="relative" mb="40px">
+        <Box position="relative" mb="20px">
             <TextField
-                height="76px"
-                sx={{
-                    input: {fontWeight: '700', border: 'none', borderRadius: '4px'},
-                    width: {lg: '1170px', xs: '450px'},
-                    backgroundColor: '#fff',
-                    borderRadius: '40px'
-                }}
+                className="searchTextField"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search Exercises"
@@ -49,23 +44,11 @@ const ExerciseSearch = () => {
                     ),
                 }}
             />
-            <Button className="search-btn" sx={{
-                backgroundColor: 'blue',
-                color: 'white',
-                '&:hover': {
-                    backgroundColor: 'dodgerblue',
-                },
-                textTransform: 'none',
-                width: {lg: '173px', xs: '90px'},
-                height: '56px',
-                position: 'absolute',
-                right: '0px',
-                fontSize: {lg: '20px', xs: '14px'}
-            }} onClick={handleSearch}>
+            <Button className="search-btn" onClick={handleSearch}>
                 Search
             </Button>
         </Box>
     );
 };
 
-export default ExerciseSearch;
+export default SearchExercise;
