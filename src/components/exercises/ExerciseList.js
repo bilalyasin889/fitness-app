@@ -1,18 +1,28 @@
-import {Box, CircularProgress, Pagination, Stack} from "@mui/material";
-import Typography from "@mui/material/Typography";
+import {Box, Pagination, Stack, Typography} from "@mui/material";
 import ExerciseCard from "./ExerciseCard";
 import {useSafeSetState} from "../../utils/SafeState";
-import {useSelector} from "react-redux";
-import {getExercises} from "../../store/exercises";
+import {filteredExercisesState} from "../../recoil/ExerciseListAtoms";
+import {useRecoilValue} from "recoil";
+import React from "react";
 
 const ExerciseList = () => {
-    const exerciseList = useSelector(getExercises);
-
-    // Pagination
     const [state, setState] = useSafeSetState({
         currentPage: 1,
         exercisesPerPage: 9
     });
+
+    const exerciseList = useRecoilValue(filteredExercisesState);
+    if (!exerciseList) {
+        return null;
+    } else if (exerciseList.length === 0) {
+        return (
+            <Typography variant="h5" sx={{fontSize: {lg: '25px', xs: '20px'}}} display="flex" justifyContent="center" alignItems="center" mb="46px">
+                No exercises found
+            </Typography>
+        );
+    }
+
+    // Pagination
     const indexOfLastExercise = state.currentPage * state.exercisesPerPage;
     const indexOfFirstExercise = indexOfLastExercise - state.exercisesPerPage;
     const currentExercises = exerciseList.slice(indexOfFirstExercise, indexOfLastExercise);
@@ -23,17 +33,10 @@ const ExerciseList = () => {
         window.scrollTo({top: 450, behavior: 'smooth'});
     };
 
-    if (!currentExercises.length) return (
-        <Box sx={{mt: {lg: '109px'}}} mt="50px" p="20px">
-            <CircularProgress/>
-        </Box>
-    );
+    if (!currentExercises.length) return null
 
     return (
-        <Box id="exercises" mt="40px" p="20px">
-            <Typography variant="h4" fontWeight="bold" sx={{fontSize: {lg: '45px', xs: '25px'}}} mb="46px">
-                Showing Results
-            </Typography>
+        <Box>
             <Stack direction={{xs: 'column', lg: 'row'}} pr="30px" pl="30px" alignItems="center"
                    sx={{gap: {lg: '50px', xs: '25px'}}} flexWrap="wrap" justifyContent="center">
                 {currentExercises.map((exercise) => (
