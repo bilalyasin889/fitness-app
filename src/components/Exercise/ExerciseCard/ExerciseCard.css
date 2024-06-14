@@ -12,25 +12,37 @@
     overflow: hidden;
     flex: 0 450px;
     width: 29vw;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exercise-card-link:hover .exercise-card,
+.exercise-card-link:focus .exercise-card {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1330px) {
+    .exercise-card {
+        width: 40vw;
+    }
+}
+
+.exercise-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10px 15px;
 }
 
 @media (max-width: 992px) {
     .exercise-card {
         width: 80vw;
     }
-}
 
-.exercise-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 10px 15px;
-}
-
-@media (min-width: 992px) {
     .exercise-img {
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
     }
 }
 

@@ -1,15 +1,15 @@
-import './ExerciseInfo.css';
 import {Box, Stack} from "@mui/material";
 import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import {useRecoilValue, useSetRecoilState} from "recoil";
+
 import {exerciseIdState, exerciseState} from "../../recoil/ExerciseInfoAtoms";
 import TargetExercises from "../../components/Exercise/SimilarExercises/TargetExercises";
 import EquipmentExercises from "../../components/Exercise/SimilarExercises/EquipmentExercises";
 import {LoadingSpinner} from "../../components/LoadingSpinner";
+import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
 
+import './ExerciseInfo.css';
 
 const ExerciseInfo = () => {
     const {id} = useParams();
@@ -23,21 +23,13 @@ const ExerciseInfo = () => {
     if (!exercise) return null;
 
     return (
-        <Box mb="72px" p="20px">
-            <Box sx={{mt: '30px'}} position="relative" mb="20px">
-                <h1 className="page-tile">
-                    {exercise.name}
-                </h1>
-                <Box>
-                    <Tooltip title="Body Part" enterDelay={500}>
-                        <Button className="pill body-part-btn">{exercise.bodyPart}</Button>
-                    </Tooltip>
-                    <Tooltip title="Target Muscle" enterDelay={500}>
-                        <Button className="pill target-muscle-btn">{exercise.target}</Button>
-                    </Tooltip>
-                    <Tooltip title="Equipment" enterDelay={500}>
-                        <Button className="pill equipment-btn">{exercise.equipment}</Button>
-                    </Tooltip>
+        <Box className="page-wrapper" role="main">
+            <Box className="page-tile">
+                <h1>{exercise.name}</h1>
+                <Box aria-label="Exercise Information" role="region">
+                    <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart} />
+                    <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.target} />
+                    <InfoPill tooltipTitle="Equipment" buttonText={exercise.equipment} />
                 </Box>
             </Box>
 
@@ -45,15 +37,15 @@ const ExerciseInfo = () => {
                 <Stack className="exercise-img-wrapper">
                     <img src={exercise.gifUrl} alt={exercise.name} loading="lazy" className="detail-image"/>
                 </Stack>
-                <h5 className="instructions-heading">Instructions:</h5>
+                <h2 className="instructions-heading">Instructions:</h2>
                 <p>{exercise.instructions}</p>
             </Stack>
 
-            <React.Suspense fallback={<LoadingSpinner/>}>
+            <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Target Exercises"/>}>
                 <TargetExercises target={exercise.target}/>
             </React.Suspense>
 
-            <React.Suspense fallback={<LoadingSpinner/>}>
+            <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Equipment Exercises"/>}>
                 <EquipmentExercises equipment={exercise.equipment}/>
             </React.Suspense>
         </Box>

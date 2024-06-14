@@ -1,10 +1,11 @@
-import './ExerciseList.css'
 import {Box, Pagination, Stack} from "@mui/material";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
 import {useSafeSetState} from "../../../utils/SafeState";
 import {filteredExercisesState} from "../../../recoil/ExerciseListAtoms";
 import {useRecoilValue} from "recoil";
 import React from "react";
+
+import './ExerciseList.css'
 
 const ExerciseList = () => {
     const [state, setState] = useSafeSetState({
@@ -13,13 +14,14 @@ const ExerciseList = () => {
     });
 
     const exerciseList = useRecoilValue(filteredExercisesState);
+
     if (!exerciseList) {
         return null;
     } else if (exerciseList.length === 0) {
         return (
-            <h5 className="no-exercise-found">
-                No exercises found
-            </h5>
+            <Box mb="40px">
+                <h3 className="no-exercise-found">No exercises found</h3>
+            </Box>
         );
     }
 
@@ -37,13 +39,29 @@ const ExerciseList = () => {
     if (!currentExercises.length) return null
 
     return (
-        <Box>
-            <Stack className="flex-grid exercises-flex-grid">
+        <Box component="section" role="region" aria-label="Exercise List">
+            {exerciseList.length > 9 && (
+                <Stack className="pagination-top" sx={{mb: '30px'}} alignItems="center">
+                    <Pagination
+                        color="standard"
+                        shape="rounded"
+                        defaultPage={1}
+                        count={Math.ceil(exerciseList.length / state.exercisesPerPage)}
+                        page={state.currentPage}
+                        onChange={paginate}
+                        size="large"
+                        aria-label="Exercise pagination"
+                    />
+                </Stack>
+            )}
+
+            <Stack className="flex-grid exercises-flex-grid" role="list">
                 {currentExercises.map((exercise) => (
-                    <ExerciseCard key={exercise.id} exercise={exercise}/>
+                    <ExerciseCard key={exercise.id} exercise={exercise} role="listitem"/>
                 ))}
             </Stack>
-            <Stack sx={{mt: {lg: '50px', xs: '20px'}}} alignItems="center">
+
+            <Stack sx={{mt: '50px'}} alignItems="center">
                 {exerciseList.length > 9 && (
                     <Pagination
                         color="standard"
@@ -53,6 +71,7 @@ const ExerciseList = () => {
                         page={state.currentPage}
                         onChange={paginate}
                         size="large"
+                        aria-label="Exercise pagination"
                     />
                 )}
             </Stack>

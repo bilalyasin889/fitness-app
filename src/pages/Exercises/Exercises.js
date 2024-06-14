@@ -1,26 +1,24 @@
 import React from 'react';
 import {Box} from '@mui/material';
+
 import {LoadingSpinner} from "../../components/LoadingSpinner";
-import './Exercises.css';
 import ExerciseFilter from "../../components/Exercise/Filter/ExerciseFilter";
 import ExerciseList from "../../components/Exercise/ExerciseList/ExerciseList";
 
+import './Exercises.css';
+
 const Exercises = () => (
-    <Box mb="72px">
-        <Box sx={{mt: '30px'}} position="relative" p="20px" mb="20px">
-            <h1 className="page-tile">
-                Exercises
-            </h1>
+    <Box className="page-wrapper" role="main" aria-labelledby="exercises-heading">
+        <Box className="page-tile">
+            <h1 id="exercises-heading">Exercises</h1>
         </Box>
-        <React.Suspense fallback={<LoadingSpinner/>}>
+        <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Exercise Filter"/>}>
             <ExerciseFilter/>
         </React.Suspense>
 
-        <Box id="exercises" mt="40px" p="20px">
-            <h2 className="result-title">
-                Showing Results
-            </h2>
-            <React.Suspense fallback={<LoadingSpinner/>}>
+        <Box id="exercises" mt="40px" aria-live="polite">
+            <h2 className="result-title">Showing Results</h2>
+            <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Exercise List"/>}>
                 <ExerciseList/>
             </React.Suspense>
         </Box>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Stack} from '@mui/material';
+
 import BodyPartFilter from "./BodyPartFilter/BodyPartFilter";
 import SearchExercise from "./SearchExercise/SearchExercise";
 

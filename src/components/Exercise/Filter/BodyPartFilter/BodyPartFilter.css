@@ -24,6 +24,8 @@
     justify-content: center !important;
     padding: 0 16px !important;
     border: 2px solid rgba(0, 0, 0, 0.23) !important;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
 }
 
 .selection-button:not(:first-of-type) {

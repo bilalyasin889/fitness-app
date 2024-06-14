@@ -2,39 +2,41 @@
     text-align: center;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
 body {
     font-family: Arial, sans-serif;
 }
 
+.fallback-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0
+}
+
+.page-wrapper {
+    display: grid;
+    place-content: center;
+    margin: 0 0 72px;
+    padding: 20px;
+}
+
 .page-tile {
-    color: #FF2625;
-    font-weight: 700;
-    text-transform: capitalize;
-    font-size: 50px;
-    margin-bottom: 15px;
-    margin-top: 0;
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 30px;
+
+    h1 {
+        color: #FF2625;
+        font-weight: 700;
+        text-transform: capitalize;
+        font-size: 50px;
+        margin-bottom: 15px;
+        margin-top: 0;
+    }
 }
 
 p {
@@ -56,39 +58,4 @@ p {
     .flex-grid {
         flex-direction: row !important;
     }
-}
-
-/*Exercise buttons*/
-.pill {
-    padding: 7px 10px !important;
-    margin-top: 10px !important;
-    margin-right: 18px !important;
-    color: #fff !important;
-    font-size: 14px !important;
-    border-radius: 20px !important;
-    text-transform: uppercase !important;
-}
-
-.body-part-btn {
-    background-color: #0000FF !important;
-}
-
-.body-part-btn:hover {
-    background-color: #0000FF !important;
-}
-
-.target-muscle-btn {
-    background-color: #008000 !important;
-}
-
-.target-muscle-btn:hover {
-    background-color: #008000 !important;
-}
-
-.equipment-btn {
-    background-color: #A52A2A !important;
-}
-
-.equipment-btn:hover {
-    background-color: #A52A2A !important;
 }

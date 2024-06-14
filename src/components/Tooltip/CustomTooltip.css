@@ -1,0 +1,12 @@
+.exercise-info-tooltip {
+    background-color: #333 !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    text-transform: capitalize;
+    padding: 10px 15px !important;
+    border-radius: 4px !important;
+}
+
+.exercise-info-tooltip-arrow {
+    color: #333 !important;
+}

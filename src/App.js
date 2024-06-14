@@ -1,12 +1,13 @@
 import './App.css';
 import {Box} from "@mui/material";
 import Navbar from "./components/Navbar";
-import React from "react";
+import React, {lazy} from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import Home from "./pages/Home/Home";
-import Exercises from "./pages/Exercises/Exercises";
-import ExerciseInfo from "./pages/ExerciseInfo/ExerciseInfo";
 import {LoadingSpinner} from "./components/LoadingSpinner";
+
+const Home = lazy(() => import('./pages/Home/Home'));
+const Exercises = lazy(() => import('./pages/Exercises/Exercises'));
+const ExerciseInfo = lazy(() => import('./pages/ExerciseInfo/ExerciseInfo'));
 
 function App() {
     return (
@@ -14,7 +15,11 @@ function App() {
             <Box m="auto">
                 <Navbar/>
                 <Box flexGrow={1}>
-                    <React.Suspense fallback={<LoadingSpinner/>}>
+                    <React.Suspense fallback={
+                        <div className="fallback-loading">
+                            <LoadingSpinner role="status" aria-label="Loading Page"/>
+                        </div>
+                    }>
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/exercises" element={<Exercises/>}/>
