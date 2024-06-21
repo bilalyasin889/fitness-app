@@ -6,7 +6,7 @@ import CustomTooltip from "../../Tooltip/CustomTooltip";
 import './InfoPill.css'
 
 const InfoPill  = ({ tooltipTitle, buttonText }) => {
-    let className = '';
+    let className;
 
     switch (tooltipTitle.toLowerCase()) {
         case 'body part':
@@ -14,6 +14,9 @@ const InfoPill  = ({ tooltipTitle, buttonText }) => {
             break;
         case 'target muscle':
             className = 'target-muscle-btn';
+            break;
+        case 'secondary muscle':
+            className = 'secondary-muscles-btn';
             break;
         case 'equipment':
             className = 'equipment-btn';
@@ -25,7 +28,7 @@ const InfoPill  = ({ tooltipTitle, buttonText }) => {
 
     return (
         <CustomTooltip title={tooltipTitle}>
-            <Button className={`pill ${className}`} aria-label={`${tooltipTitle}. ${buttonText}`}>{buttonText}</Button>
+            <Button className={`pill ${className}`} aria-label={`${tooltipTitle}. ${buttonText}.`}>{buttonText}</Button>
         </CustomTooltip>
     );
 };

@@ -1,21 +1,13 @@
 import {APPLICATION_URIS, HOSTS} from '../../config/applicationUris';
 import ApiClient from "./ApiClient";
 
-const HOST = HOSTS.exerciseDB;
-const API_URIS = APPLICATION_URIS.exerciseDB;
-const HEADERS = {
-    'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
-    'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
-};
+const HOST = HOSTS.exercise;
+const API_URIS = APPLICATION_URIS.exercise;
 
-const apiClient = new ApiClient(HOST, HEADERS);
+const apiClient = new ApiClient(HOST);
 
 export const getAllExercises = async () => {
-    const params = {
-        limit: '9999',
-        offset: '0'
-    };
-    return apiClient.get(API_URIS.exercises, params)
+    return apiClient.get(API_URIS.exercises)
         .then((response) => {
             console.debug("getAllExercises: Successfully retrieved all exercises.");
             return response.data;
@@ -39,11 +31,7 @@ export const getBodyParts = async () => {
 };
 
 export const getExercisesByBodyPart = async (bodyPart) => {
-    const params = {
-        limit: '9999',
-        offset: '0'
-    };
-    return apiClient.get(API_URIS.exercisesByBodyPart(bodyPart), params)
+    return apiClient.get(API_URIS.exercisesByBodyPart(bodyPart))
         .then((response) => {
             console.debug(`getExercisesByBodyPart: Successfully retrieved exercises for body part [${bodyPart}].`);
             return response.data;
@@ -55,12 +43,7 @@ export const getExercisesByBodyPart = async (bodyPart) => {
 };
 
 export const getExercisesByTargetMuscle = async (targetMuscle) => {
-    const params = {
-        limit: '9999',
-        offset: '0'
-    };
-
-    return apiClient.get(API_URIS.exercisesByTargetMuscle(targetMuscle), params)
+    return apiClient.get(API_URIS.exercisesByTargetMuscle(targetMuscle))
         .then((response) => {
             console.debug(`getExercisesByTargetMuscle: Successfully retrieved exercises for target muscle [${targetMuscle}].`);
             return response.data.sort(() => Math.random() - 0.5).slice(0, 3);
@@ -72,11 +55,7 @@ export const getExercisesByTargetMuscle = async (targetMuscle) => {
 };
 
 export const getExercisesByEquipment = async (equipment) => {
-    const params = {
-        limit: '9999',
-        offset: '0'
-    };
-    return apiClient.get(API_URIS.exercisesByEquipment(equipment), params)
+    return apiClient.get(API_URIS.exercisesByEquipment(equipment))
         .then((response) => {
             console.debug(`getExercisesByEquipment: Successfully retrieved exercises for equipment [${equipment}].`);
             return response.data.sort(() => Math.random() - 0.5).slice(0, 3);

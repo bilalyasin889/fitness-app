@@ -19,8 +19,8 @@ export const targetExercisesState = selector({
     key: 'targetExercisesState',
     get: async ({get}) => {
         const exercise = get(exerciseState);
-        if (!exercise?.target) return [];
-        return await getExercisesByTargetMuscle(exercise.target);
+        if (!exercise?.targetMuscle) return [];
+        return await getExercisesByTargetMuscle(exercise.targetMuscle);
     },
 });
 

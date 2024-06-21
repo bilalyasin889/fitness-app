@@ -27,9 +27,12 @@ const ExerciseInfo = () => {
             <Box className="page-tile">
                 <h1>{exercise.name}</h1>
                 <Box aria-label="Exercise Information" role="region">
-                    <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart} />
-                    <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.target} />
-                    <InfoPill tooltipTitle="Equipment" buttonText={exercise.equipment} />
+                    <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
+                    <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.targetMuscle}/>
+                    <InfoPill tooltipTitle="Equipment" buttonText={exercise.equipment}/>
+                    {exercise.secondaryMuscles.map((muscle, index) => (
+                        <InfoPill key={`${index}-${muscle}`} tooltipTitle="Secondary Muscle" buttonText={muscle}/>
+                    ))}
                 </Box>
             </Box>
 
@@ -38,11 +41,15 @@ const ExerciseInfo = () => {
                     <img src={exercise.gifUrl} alt={exercise.name} loading="lazy" className="detail-image"/>
                 </Stack>
                 <h2 className="instructions-heading">Instructions:</h2>
-                <p>{exercise.instructions}</p>
+                <Box className="instructions-list">
+                    {exercise.instructions.map((instruction, index) => (
+                        <div key={index}>{instruction}</div>
+                    ))}
+                </Box>
             </Stack>
 
             <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Target Exercises"/>}>
-                <TargetExercises target={exercise.target}/>
+                <TargetExercises target={exercise.targetMuscle}/>
             </React.Suspense>
 
             <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Equipment Exercises"/>}>

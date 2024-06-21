@@ -25,6 +25,14 @@
     background-color: #008000 !important;
 }
 
+.secondary-muscles-btn {
+    background-color: #272343 !important;
+}
+
+.secondary-muscles-btn:hover {
+    background-color: #272343 !important;
+}
+
 .equipment-btn {
     background-color: #A52A2A !important;
 }

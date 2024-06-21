@@ -8,18 +8,17 @@ const createAxiosInstance = ({baseURL, headers = {}}) => {
 }
 
 class ApiClient {
-    constructor(baseURL, additionalHeaders) {
+    constructor(baseURL) {
         this.axiosInstance = createAxiosInstance({
             baseURL,
             headers: {
-                'Content-Type': 'application/json',
-                ...additionalHeaders
+                'Content-Type': 'application/json'
             }
         });
     }
 
-    get(endpoint, params = {}) {
-        return this.axiosInstance.get(endpoint, {params});
+    get(endpoint) {
+        return this.axiosInstance.get(endpoint);
     }
 }
 

@@ -1,13 +1,28 @@
 import {Box, Pagination, Stack} from "@mui/material";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
 import {useSafeSetState} from "../../../utils/SafeState";
-import {filteredExercisesState} from "../../../recoil/ExerciseListAtoms";
-import {useRecoilValue} from "recoil";
-import React from "react";
+import {exercisesDataState, filteredExercisesState} from "../../../recoil/ExerciseListAtoms";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import React, {useEffect} from "react";
 
 import './ExerciseList.css'
+import {getAllExercises} from "../../../utils/http/exerciseData";
 
 const ExerciseList = () => {
+    const setExerciseData = useSetRecoilState(exercisesDataState);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let result = await getAllExercises()
+
+            if (!result) setExerciseData([]);
+            else setExerciseData(result)
+        }
+
+        fetchData();
+    }, [setExerciseData]);
+
+
     const [state, setState] = useSafeSetState({
         currentPage: 1,
         exercisesPerPage: 9

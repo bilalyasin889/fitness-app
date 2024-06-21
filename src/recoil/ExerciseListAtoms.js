@@ -1,5 +1,9 @@
 import {atom, selector} from 'recoil';
-import {getAllExercises, getExercisesByBodyPart} from "../utils/http/exerciseData";
+
+export const exercisesDataState = atom({
+    key: 'exercisesDataState',
+    default: [],
+});
 
 export const searchFilterState = atom({
     key: 'searchFilterState',
@@ -14,24 +18,23 @@ export const bodyPartFilterState = atom({
 export const filteredExercisesState = selector({
     key: 'filteredExercisesState',
     get: async ({get}) => {
-        const bodyPartFilter = get(bodyPartFilterState);
+        let exerciseData = get(exercisesDataState);
+        const bodyPartFilter = get(bodyPartFilterState).toLowerCase();
         const search = get(searchFilterState).toLowerCase();
 
-        let result;
-        result = bodyPartFilter.toLowerCase() === 'all'
-            ? await getAllExercises()
-            : await getExercisesByBodyPart(bodyPartFilter);
+        if (!exerciseData || exerciseData.length === 0) return [];
 
-        if (!result) return [];
+        if (bodyPartFilter !== 'all')
+            exerciseData = exerciseData.filter(item => item.bodyPart.toLowerCase() === bodyPartFilter)
 
         return search
-            ? result.filter(
+            ? exerciseData.filter(
                 (item) =>
                     item.name.toLowerCase().includes(search) ||
-                    item.target.toLowerCase().includes(search) ||
+                    item.targetMuscle.toLowerCase().includes(search) ||
                     item.equipment.toLowerCase().includes(search) ||
                     item.bodyPart.toLowerCase().includes(search)
             )
-            : result;
+            : exerciseData;
     },
 });

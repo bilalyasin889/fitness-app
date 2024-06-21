@@ -45,7 +45,7 @@ const ExerciseCard = ({exercise}) => {
                     )}
                     <Box mb="15px">
                         <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
-                        <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.target}/>
+                        <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.targetMuscle}/>
                         <InfoPill tooltipTitle="Equipment" buttonText={exercise.equipment}/>
                     </Box>
                 </Stack>
@@ -56,12 +56,12 @@ const ExerciseCard = ({exercise}) => {
 
 ExerciseCard.propTypes = {
     exercise: PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         gifUrl: PropTypes.string.isRequired,
         bodyPart: PropTypes.string.isRequired,
         equipment: PropTypes.string.isRequired,
-        target: PropTypes.string.isRequired,
+        targetMuscle: PropTypes.string.isRequired,
     }).isRequired
 };
 
