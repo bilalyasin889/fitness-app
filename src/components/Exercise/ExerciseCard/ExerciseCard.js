@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import InfoPill from "../InfoPill/InfoPill";
 import CustomTooltip from "../../Tooltip/CustomTooltip";
 
+import icon from './../../../assets/images/gym.png'
 import './ExerciseCard.css';
 
 const useIsOverflowing = () => {
@@ -29,7 +30,7 @@ const ExerciseCard = ({exercise}) => {
         <Link className="exercise-card-link" to={`/exercise/${exercise.id}`} aria-label={exercise.name}>
             <Box className="exercise-card">
                 <img
-                    src={exercise.gifUrl}
+                    src={icon}
                     alt={exercise.name}
                     loading="lazy"
                     className="exercise-img"

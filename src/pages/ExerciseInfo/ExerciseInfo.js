@@ -9,6 +9,7 @@ import EquipmentExercises from "../../components/Exercise/SimilarExercises/Equip
 import {LoadingSpinner} from "../../components/LoadingSpinner";
 import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
 
+import icon from './../../assets/images/gym.png'
 import './ExerciseInfo.css';
 
 const ExerciseInfo = () => {
@@ -37,9 +38,9 @@ const ExerciseInfo = () => {
             </Box>
 
             <Stack mb="50px">
-                <Stack className="exercise-img-wrapper">
-                    <img src={exercise.gifUrl} alt={exercise.name} loading="lazy" className="detail-image"/>
-                </Stack>
+                {/*<Stack className="exercise-img-wrapper">*/}
+                {/*    <img src={exercise.gifUrl} alt={exercise.name} loading="lazy" className="detail-image"/>*/}
+                {/*</Stack>*/}
                 <h2 className="instructions-heading">Instructions:</h2>
                 <Box className="instructions-list">
                     {exercise.instructions.map((instruction, index) => (
