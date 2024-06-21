@@ -9,7 +9,6 @@ import EquipmentExercises from "../../components/Exercise/SimilarExercises/Equip
 import {LoadingSpinner} from "../../components/LoadingSpinner";
 import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
 
-import icon from './../../assets/images/gym.png'
 import './ExerciseInfo.css';
 
 const ExerciseInfo = () => {
