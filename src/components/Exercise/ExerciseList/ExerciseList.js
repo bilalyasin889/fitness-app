@@ -6,21 +6,25 @@ import {useRecoilValue, useSetRecoilState} from "recoil";
 import React, {useEffect} from "react";
 
 import './ExerciseList.css'
-import {getAllExercises} from "../../../utils/http/exerciseData";
+import {useAuth} from "../../../utils/authentication/AuthProvider";
+import {exerciseApi, getAllExercises} from "../../../utils/http/exerciseData";
 
 const ExerciseList = () => {
     const setExerciseData = useSetRecoilState(exercisesDataState);
 
+    const {accessToken, storeToken, removeToken} = useAuth();
+    const api = exerciseApi(accessToken, storeToken, removeToken);
+
     useEffect(() => {
         const fetchData = async () => {
-            let result = await getAllExercises()
+            let result = await getAllExercises(api)
 
             if (!result) setExerciseData([]);
             else setExerciseData(result)
         }
 
         fetchData();
-    }, [setExerciseData]);
+    }, []);
 
 
     const [state, setState] = useSafeSetState({

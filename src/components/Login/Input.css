@@ -7,6 +7,12 @@
     max-width: 325px;
 }
 
+.input-wrapper.small {
+    width: 20vw;
+    max-width: 148px;
+}
+
+
 .input-field {
     padding: 10px;
     height: 40px;

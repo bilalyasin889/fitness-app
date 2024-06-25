@@ -1,22 +1,28 @@
 import {Box, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import React from "react";
-import {selector, useRecoilState, useRecoilValue} from "recoil";
+import React, {useEffect, useState} from "react";
+import {useRecoilState} from "recoil";
 
 import {bodyPartFilterState} from "../../../../recoil/ExerciseListAtoms";
-import {getBodyParts} from "../../../../utils/http/exerciseData";
+import {exerciseApi, getBodyParts} from "../../../../utils/http/exerciseData";
 
 import './BodyPartFilter.css'
-
-const bodyPartsQuery = selector({
-    key: 'bodyPartsQuery',
-    get: async () => {
-        return await getBodyParts();
-    },
-});
+import {useAuth} from "../../../../utils/authentication/AuthProvider";
 
 const BodyPartFilter = () => {
     const [bodyPartFilter, setBodyPartFilter] = useRecoilState(bodyPartFilterState);
-    const bodyParts = useRecoilValue(bodyPartsQuery);
+    const [bodyParts, setBodyParts] = useState([]);
+
+    const {accessToken, storeToken, removeToken} = useAuth();
+    const api = exerciseApi(accessToken, storeToken, removeToken);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const parts = await getBodyParts(api);
+            setBodyParts(parts || []);
+        };
+
+        fetchData();
+    }, [])
 
     if (!bodyParts) return null;
 

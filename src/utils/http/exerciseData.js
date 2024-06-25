@@ -1,13 +1,15 @@
+import AxiosService from "./AxiosService";
 import {APPLICATION_URIS, HOSTS} from '../../config/applicationUris';
-import ApiClient from "./ApiClient";
 
 const HOST = HOSTS.exercise;
 const API_URIS = APPLICATION_URIS.exercise;
 
-const apiClient = new ApiClient(HOST);
+export const exerciseApi = (accessToken, storeToken, removeToken) => {
+    return AxiosService(HOST, accessToken, storeToken, removeToken);
+}
 
-export const getAllExercises = async () => {
-    return apiClient.get(API_URIS.exercises)
+export const getAllExercises = async (api) => {
+    return api.get(API_URIS.exercises)
         .then((response) => {
             console.debug("getAllExercises: Successfully retrieved all exercises.");
             return response.data;
@@ -18,8 +20,8 @@ export const getAllExercises = async () => {
         });
 };
 
-export const getBodyParts = async () => {
-    return apiClient.get(API_URIS.bodyPartList)
+export const getBodyParts = async (api) => {
+    return api.get(API_URIS.bodyPartList)
         .then((response) => {
             console.debug("getBodyParts: Successfully retrieved body parts.");
             return (['all', ...response.data]);
@@ -30,8 +32,8 @@ export const getBodyParts = async () => {
         });
 };
 
-export const getExercisesByBodyPart = async (bodyPart) => {
-    return apiClient.get(API_URIS.exercisesByBodyPart(bodyPart))
+export const getExercisesByBodyPart = async (api, bodyPart) => {
+    return api.get(API_URIS.exercisesByBodyPart(bodyPart))
         .then((response) => {
             console.debug(`getExercisesByBodyPart: Successfully retrieved exercises for body part [${bodyPart}].`);
             return response.data;
@@ -42,8 +44,8 @@ export const getExercisesByBodyPart = async (bodyPart) => {
         });
 };
 
-export const getExercisesByTargetMuscle = async (targetMuscle) => {
-    return apiClient.get(API_URIS.exercisesByTargetMuscle(targetMuscle))
+export const getExercisesByTargetMuscle = async (api, targetMuscle) => {
+    return api.get(API_URIS.exercisesByTargetMuscle(targetMuscle))
         .then((response) => {
             console.debug(`getExercisesByTargetMuscle: Successfully retrieved exercises for target muscle [${targetMuscle}].`);
             return response.data.sort(() => Math.random() - 0.5).slice(0, 3);
@@ -54,8 +56,8 @@ export const getExercisesByTargetMuscle = async (targetMuscle) => {
         });
 };
 
-export const getExercisesByEquipment = async (equipment) => {
-    return apiClient.get(API_URIS.exercisesByEquipment(equipment))
+export const getExercisesByEquipment = async (api, equipment) => {
+    return api.get(API_URIS.exercisesByEquipment(equipment))
         .then((response) => {
             console.debug(`getExercisesByEquipment: Successfully retrieved exercises for equipment [${equipment}].`);
             return response.data.sort(() => Math.random() - 0.5).slice(0, 3);
@@ -66,8 +68,8 @@ export const getExercisesByEquipment = async (equipment) => {
         });
 };
 
-export const getExerciseById = async (id) => {
-    return apiClient.get(API_URIS.exerciseById(id))
+export const getExerciseById = async (api, id) => {
+    return api.get(API_URIS.exerciseById(id))
         .then((response) => {
             console.debug(`getExerciseById: Successfully retrieved exercise info for id [${id}].`);
             return response.data;

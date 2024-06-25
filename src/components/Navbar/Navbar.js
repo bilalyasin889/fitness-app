@@ -29,7 +29,7 @@ const userPages = [
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const location = useLocation();
-    const {isAuthenticated, removeTokens} = useAuth();
+    const {isAuthenticated, removeToken} = useAuth();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -40,7 +40,7 @@ function Navbar() {
     };
 
     const handleLogout = () => {
-        removeTokens();
+        removeToken();
         handleCloseNavMenu();
     };
 
@@ -49,9 +49,9 @@ function Navbar() {
     };
 
     const renderNavItems = (pages) => {
-        return pages.map((page) => (
+        return pages.map((page, index) => (
             <NavItem
-                key={page.url}
+                key={`${page.url}-${index}`}
                 onClick={handleCloseNavMenu}
                 to={page.url}
                 isActive={isActive(page.url)}
@@ -92,12 +92,13 @@ function Navbar() {
 
                     <Box sx={{flexGrow: 1}}/>
 
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         {renderNavItems(defaultPages)}
-                        {isAuthenticated() ? (
+                        {isAuthenticated ? (
                             <>
                                 {renderNavItems(userPages)}
                                 <NavItem
+                                    navKey="logout"
                                     onClick={handleLogout}
                                     to="/"
                                     text="Logout"
@@ -140,10 +141,11 @@ function Navbar() {
                                 flexDirection: 'column',
                             }}>
                                 {renderNavItems(defaultPages)}
-                                {isAuthenticated() ? (
+                                {isAuthenticated ? (
                                     <>
                                         {renderNavItems(userPages)}
                                         <NavItem
+                                            navKey="logout"
                                             onClick={handleLogout}
                                             to="/"
                                             text="Logout"

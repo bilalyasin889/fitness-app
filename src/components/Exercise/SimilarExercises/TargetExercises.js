@@ -1,12 +1,24 @@
-import {useRecoilValue} from "recoil";
-import {targetExercisesState} from "../../../recoil/ExerciseInfoAtoms";
 import {Box, Stack} from "@mui/material";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './SimilarExercises.css';
+import {exerciseApi, getExercisesByTargetMuscle} from "../../../utils/http/exerciseData";
+import {useAuth} from "../../../utils/authentication/AuthProvider";
 
 const TargetExercises = ({target}) => {
-    const targetExercises = useRecoilValue(targetExercisesState);
+    const [targetExercises, setTargetExercises] = useState([]);
+
+    const {accessToken, storeToken, removeToken} = useAuth();
+    const api = exerciseApi(accessToken, storeToken, removeToken);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const exercises = await getExercisesByTargetMuscle(api, target);
+            setTargetExercises(exercises || []);
+        };
+
+        fetchData();
+    }, [target])
 
     if (!targetExercises) {
         return null;

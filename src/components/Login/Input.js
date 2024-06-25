@@ -18,7 +18,8 @@ export const Input = ({
                           id,
                           placeholder,
                           validation,
-                          autocomplete
+                          autocomplete,
+                          size = 'large'
                       }) => {
     const {
         register,
@@ -28,8 +29,10 @@ export const Input = ({
     const inputErrors = findInputError(errors, name);
     const isInvalid = Object.keys(inputErrors).length > 0;
 
+    const wrapperClassName = `input-wrapper ${size}`;
+
     return (
-        <div className="input-wrapper">
+        <div className={wrapperClassName}>
             <input
                 id={id}
                 type={type}

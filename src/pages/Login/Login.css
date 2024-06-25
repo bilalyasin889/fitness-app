@@ -1,11 +1,11 @@
-.login-page-wrapper {
+.account-page-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
 }
 
-.login-form {
+.account-form {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -22,7 +22,7 @@ h4 {
     margin-bottom: 2rem;
 }
 
-.login-input-wrapper {
+.account-input-wrapper {
      display: flex;
      align-items: center;
      justify-content: space-between;
@@ -30,11 +30,16 @@ h4 {
      gap: 20px;
  }
 
+.account-input-wrapper.row {
+    flex-direction: row;
+    gap: 30px;
+}
+
 .request-error {
     margin-top: 15px;
 }
 
-.login-btn-wrapper {
+.account-btn-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;

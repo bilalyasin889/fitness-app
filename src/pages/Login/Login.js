@@ -6,26 +6,26 @@ import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
 import {FormProvider, useForm} from "react-hook-form";
 import {useAuth} from '../../utils/authentication/AuthProvider';
-import {login} from "../../utils/http/Auth";
+import {authApi, login} from "../../utils/http/Auth";
 import {FormError} from "../../components/Login/FormError";
 import {CircularProgress} from "@mui/material";
 
 const Login = () => {
     const methods = useForm()
-    const {storeTokens} = useAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const {accessToken, storeToken, removeToken} = useAuth();
+    const api = authApi(accessToken, storeToken, removeToken);
     const navigate = useNavigate();
 
     const onSubmit = methods.handleSubmit(async data => {
         setLoading(true);
         setError(null);
-        console.log(data);
         methods.reset();
 
-        const response = await login(data.email, data.password);
+        const response = await login(api, data.email, data.password);
         if (response.success) {
-            storeTokens(response.accessToken, response.refreshToken);
             navigate('/dashboard');
             setLoading(false);
         } else {
@@ -35,8 +35,8 @@ const Login = () => {
     })
 
     return (
-        <div className="login-page-wrapper">
-            <div className="login-form">
+        <div className="account-page-wrapper">
+            <div className="account-form">
                 <h4>Login</h4>
                 <FormProvider {...methods}>
                     <form
@@ -44,7 +44,7 @@ const Login = () => {
                         noValidate
                         autoComplete="off"
                     >
-                        <div className="login-input-wrapper">
+                        <div className="account-input-wrapper">
                             <Input {...email_validation} />
                             <Input {...password_validation} />
                         </div>
@@ -53,7 +53,7 @@ const Login = () => {
                                 <FormError message={error}/>
                             </div>
                         )}
-                        <div className="login-btn-wrapper">
+                        <div className="account-btn-wrapper">
                             <Button
                                 disabled={loading}
                                 onClick={onSubmit}

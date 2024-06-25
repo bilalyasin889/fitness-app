@@ -1,4 +1,6 @@
-import React, {createContext, useState, useEffect, useContext, useMemo} from 'react';
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import {TokenService} from './TokenService';
+import {useNavigate} from "react-router-dom";
 
 // Create the Auth Context
 const AuthContext = createContext();
@@ -9,44 +11,44 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({children}) => {
-    const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || null);
-    const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken') || null);
+    const [token, setToken] = useState(TokenService.getToken());
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (accessToken) {
-            localStorage.setItem('accessToken', accessToken);
-        } else {
-            localStorage.removeItem('accessToken')
+        if (token) {
+            TokenService.setToken(token);
         }
-    }, [accessToken]);
+    }, [token]);
 
-    useEffect(() => {
-        if (refreshToken) {
-            localStorage.setItem('refreshToken', refreshToken);
-        } else {
-            localStorage.removeItem('refreshToken')
-        }
-    }, [refreshToken]);
-
-    const storeTokens = (newAccessToken, newRefreshToken) => {
-        setAccessToken(newAccessToken);
-        setRefreshToken(newRefreshToken);
+    const storeToken = (newAccessToken) => {
+        setToken(newAccessToken);
     };
 
-    const removeTokens = () => {
-        setAccessToken(null);
-        setRefreshToken(null);
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const removeToken = useCallback(() => {
+        setToken(null);
+        TokenService.removeToken();
+        navigate('/login');
+    }, [navigate]);
+
+    const isAuthenticated = useMemo(() => {
+        if (TokenService.isTokenValid(token)) {
+            return true;
+        } else if (token) {
+            removeToken();
+            return false;
+        }
+        return false;
+    }, [token, removeToken]);
 
     const contextValue = useMemo(
         () => ({
-            accessToken,
-            refreshToken,
-            storeTokens,
-            removeTokens,
-            isAuthenticated: () => accessToken !== null && refreshToken !== null,
+            accessToken: token,
+            storeToken,
+            removeToken,
+            isAuthenticated
         }),
-        [accessToken, refreshToken]
+        [token, removeToken, isAuthenticated]
     );
 
     return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

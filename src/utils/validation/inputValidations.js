@@ -1,3 +1,17 @@
+export const name_validation = {
+    name: 'name',
+    type: 'text',
+    id: 'name',
+    placeholder: 'Full Name',
+    autocomplete: 'name',
+    validation: {
+        required: {
+            value: true,
+            message: 'Full name is required',
+        }
+    },
+};
+
 export const email_validation = {
     name: 'email',
     type: 'email',
@@ -70,4 +84,38 @@ export const confirm_password_validation = {
     },
 };
 
+export const weight_validation = {
+    name: 'weight',
+    type: 'number',
+    id: 'weight',
+    size: 'small',
+    placeholder: 'Weight (kg)',
+    validation: {
+        required: {
+            value: true,
+            message: 'Weight is required',
+        },
+        min: {
+            value: 1,
+            message: 'Weight must be at least 1 kg',
+        }
+    },
+};
 
+export const height_validation = {
+    name: 'height',
+    type: 'number',
+    id: 'height',
+    size: 'small',
+    placeholder: 'Height (cm)',
+    validation: {
+        required: {
+            value: true,
+            message: 'Height is required',
+        },
+        min: {
+            value: 30,
+            message: 'Height must be at least 30 cm',
+        }
+    },
+};

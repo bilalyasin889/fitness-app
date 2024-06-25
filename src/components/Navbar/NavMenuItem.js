@@ -2,9 +2,9 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import Button from "@mui/material/Button";
 
-export const NavItem = ({key, onClick, to, isActive, text, variant}) => (
+export const NavItem = ({navKey, onClick, to, isActive, text, variant}) => (
     <Button
-        key={key}
+        key={navKey}
         onClick={onClick}
         component={NavLink}
         to={to}

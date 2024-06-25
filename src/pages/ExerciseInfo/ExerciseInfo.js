@@ -1,25 +1,31 @@
 import {Box, Stack} from "@mui/material";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-
-import {exerciseIdState, exerciseState} from "../../recoil/ExerciseInfoAtoms";
 import TargetExercises from "../../components/Exercise/SimilarExercises/TargetExercises";
 import EquipmentExercises from "../../components/Exercise/SimilarExercises/EquipmentExercises";
 import {LoadingSpinner} from "../../components/LoadingSpinner";
 import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
 
 import './ExerciseInfo.css';
+import {exerciseApi, getExerciseById} from "../../utils/http/exerciseData";
+import {useAuth} from "../../utils/authentication/AuthProvider";
 
 const ExerciseInfo = () => {
     const {id} = useParams();
-    const setExerciseId = useSetRecoilState(exerciseIdState);
+    const [exercise, setExercise] = useState(null);
+
+    const {accessToken, storeToken, removeToken} = useAuth();
+    const api = exerciseApi(accessToken, storeToken, removeToken);
 
     useEffect(() => {
-        setExerciseId(id);
-    }, [id, setExerciseId]);
+        const fetchData = async () => {
+            const exercises = await getExerciseById(api, id);
+            setExercise(exercises);
+        };
 
-    const exercise = useRecoilValue(exerciseState);
+        fetchData();
+    }, [id])
+
     if (!exercise) return null;
 
     return (

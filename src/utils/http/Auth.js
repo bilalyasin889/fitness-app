@@ -1,29 +1,21 @@
+import AxiosService from './AxiosService';
 import {APPLICATION_URIS, HOSTS} from '../../config/applicationUris';
-import ApiClient from "./ApiClient";
 
 const HOST = HOSTS.auth;
 const API_URIS = APPLICATION_URIS.auth;
-const HEADERS = {
-    withCredentials: true
+
+export const authApi = (accessToken, storeToken, removeToken) => {
+    return AxiosService(HOST, accessToken, storeToken, removeToken);
 }
 
-const apiClient = new ApiClient(HOST, HEADERS);
-
-export const login = async (email, password) => {
-    return apiClient.post(
+export const login = async (api, email, password) => {
+    return api.post(
         API_URIS.login,
         JSON.stringify({email, password})
     )
         .then((response) => {
             console.debug("login: User successfully authenticated.");
-            const {accessToken, refreshToken} = response.data;
-            apiClient.addToken(accessToken);
-
-            return {
-                success: true,
-                accessToken: accessToken,
-                refreshToken: refreshToken
-            };
+            return {success: true};
         })
         .catch((error) => {
             console.error("login: Error authenticating user: ", error.message);
@@ -31,14 +23,20 @@ export const login = async (email, password) => {
         });
 };
 
-export const register = async (email, password) => {
-    return apiClient.post(
+export const register = async (api, data) => {
+    return api.post(
         API_URIS.register,
-        JSON.stringify({email, password})
+        JSON.stringify({
+            email: data.email,
+            password: data.password,
+            name: data.name,
+            weight: data.weight,
+            height: data.height
+        })
     )
-        .then((response) => {
+        .then(() => {
             console.debug("register: User successfully created.");
-            return { success: true };
+            return {success: true};
         })
         .catch((error) => {
             console.error("register: Error creating user: ", error.message);
@@ -46,8 +44,21 @@ export const register = async (email, password) => {
         });
 };
 
-const getErrorMessage = (error, code)=> {
+
+export const getUserInfo = async (api) => {
+    return api.get(API_URIS.userInfo)
+        .then((response) => {
+            console.debug("userInfo: User Info successfully retrieved.");
+            return response.data;
+        })
+        .catch((error) => {
+            console.error("userInfo: Error retrieving user info: ", getErrorMessage(error, 404));
+            return null
+        });
+};
+
+const getErrorMessage = (error, code) => {
     return error.response?.status === code
         ? error.response.data
         : 'Unexpected error, please try again. If error persists, please contact support.';
-}
+};
