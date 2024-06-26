@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useFormContext} from 'react-hook-form';
 
 import './Input.css';
@@ -17,17 +17,30 @@ export const Input = ({
                           type,
                           id,
                           placeholder,
+                          value,
                           validation,
                           autocomplete,
                           size = 'large'
                       }) => {
     const {
         register,
-        formState: {errors},
+        formState: { errors },
+        setValue,
+        watch,
+        trigger
     } = useFormContext();
 
     const inputErrors = findInputError(errors, name);
     const isInvalid = Object.keys(inputErrors).length > 0;
+
+    const defaultValueRef = useRef(value);
+
+    useEffect(() => {
+        if (value !== undefined && value !== null && value !== watch(name)) {
+            setValue(name, value);
+            trigger(name);
+        }
+    }, [name, value, setValue, trigger, watch]);
 
     const wrapperClassName = `input-wrapper ${size}`;
 
@@ -37,6 +50,7 @@ export const Input = ({
                 id={id}
                 type={type}
                 placeholder={placeholder}
+                defaultValue={value === undefined || value === null ? defaultValueRef.current : undefined}
                 autoComplete={autocomplete}
                 {...register(name, validation)}
                 className={`input-field ${isInvalid ? 'invalid' : ''}`}

@@ -22,15 +22,15 @@ h4 {
     margin-bottom: 2rem;
 }
 
-.account-input-wrapper {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     flex-direction: column;
-     gap: 20px;
- }
+.form-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+}
 
-.account-input-wrapper.row {
+.form-input-wrapper.row {
     flex-direction: row;
     gap: 30px;
 }

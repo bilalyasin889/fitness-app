@@ -51,10 +51,28 @@ export const useAuthApi = () => {
                 return response.data;
             })
             .catch((error) => {
-                console.error("userInfo: Error retrieving user info: ", getErrorMessage(error, 404));
-                return null
+                console.error("userInfo: Error retrieving user info: ", error.message);
+                return {success: false, error: getErrorMessage(error, null)};
             });
     };
+
+    const updateUserInfo = async (email, data) => {
+        return axiosInstance.post(API_URIS.updateUserInfo,
+            JSON.stringify({
+                email,
+                name: data.name,
+                weight: data.weight,
+                height: data.height
+            }))
+            .then(() => {
+                console.debug("updateUserInfo: User Info successfully updated.");
+                return {success: true};
+            })
+            .catch((error) => {
+                console.error("userInfo: Error updating user info: ", error.message);
+                return {success: false, error: getErrorMessage(error, null)};
+            });
+    }
 
     const getErrorMessage = (error, code) => {
         return error.response?.status === code
@@ -65,6 +83,7 @@ export const useAuthApi = () => {
     return {
         login,
         register,
-        getUserInfo
+        getUserInfo,
+        updateUserInfo
     };
 };

@@ -12,7 +12,8 @@ const Exercises = lazy(() => import('./pages/Exercises/Exercises'));
 const ExerciseInfo = lazy(() => import('./pages/ExerciseInfo/ExerciseInfo'));
 const Login = lazy(() => import('./pages/Login/Login'));
 const CreateAccount = lazy(() => import('./pages/Login/CreateAccount'));
-const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard')); // New Dashboard component
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const ProfileForm = lazy(() => import('./pages/Dashboard/ProfileForm'));
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
 
                                 <Route element={<ProtectedRoute/>}>
                                     <Route path="/dashboard" element={<Dashboard/>}/>
+                                    <Route path="/edit-profile" element={<ProfileForm/>}/>
                                 </Route>
                             </Routes>
                         </React.Suspense>

@@ -1,72 +1,36 @@
-import React, {useState} from 'react';
-import './Login.css';
+import React from 'react';
 import {Input} from "../../components/Login/Input";
 import {email_validation, password_validation} from "../../utils/validation/inputValidations";
-import Button from "@mui/material/Button";
-import {Link, useNavigate} from "react-router-dom";
-import {FormProvider, useForm} from "react-hook-form";
+import {Link} from "react-router-dom";
 import {useAuthApi} from "../../utils/http/AuthApi";
-import {FormError} from "../../components/Login/FormError";
-import {CircularProgress} from "@mui/material";
+import './accountStyles.css';
+import FormWrapper from "../../components/Form/FormWrapper";
 
 const Login = () => {
-    const methods = useForm()
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
     const {login} = useAuthApi();
-    const navigate = useNavigate();
 
-    const onSubmit = methods.handleSubmit(async data => {
-        setLoading(true);
-        setError(null);
-        methods.reset();
+    const onSubmit = async (data) => {
+        return await login(data.email, data.password);
+    };
 
-        const response = await login(data.email, data.password);
-        if (response.success) {
-            navigate('/dashboard');
-            setLoading(false);
-        } else {
-            setError(response.error);
-            setLoading(false);
-        }
-    })
+    const footer = (
+        <div className="create-account-link">
+            <p>Don't have an account? <Link to="/create-account">Create Account</Link></p>
+        </div>
+    );
 
     return (
-        <div className="account-page-wrapper">
-            <div className="account-form">
-                <h4>Login</h4>
-                <FormProvider {...methods}>
-                    <form
-                        onSubmit={e => e.preventDefault()}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <div className="account-input-wrapper">
-                            <Input {...email_validation} />
-                            <Input {...password_validation} />
-                        </div>
-                        {error && (
-                            <div className="request-error">
-                                <FormError message={error}/>
-                            </div>
-                        )}
-                        <div className="account-btn-wrapper">
-                            <Button
-                                disabled={loading}
-                                onClick={onSubmit}
-                                className="login-btn"
-                            >
-                                {loading ? <CircularProgress size={24}/> : 'Login'}
-                            </Button>
-                        </div>
-                        <div className="create-account-link">
-                            <p>Don't have an account? <Link to="/create-account">Create Account</Link></p>
-                        </div>
-                    </form>
-                </FormProvider>
+        <FormWrapper
+            title="Login"
+            btnText="Login"
+            navigateUrl="/dashboard"
+            onSubmit={onSubmit}
+            footer={footer}>
+            <div className="form-input-wrapper">
+                <Input {...email_validation} />
+                <Input {...password_validation} />
             </div>
-        </div>
+        </FormWrapper>
     );
 };
 

@@ -5,10 +5,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import PersonIcon from '@mui/icons-material/Person';
 
 import './UserCard.css'
+import {useNavigate} from "react-router-dom";
 
 export default function UserCard() {
     const [userInfo, setUserInfo] = useState({});
-
+    const navigate = useNavigate();
     const {getUserInfo} = useAuthApi();
 
     useEffect(() => {
@@ -22,6 +23,10 @@ export default function UserCard() {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleEditClick = () => {
+        navigate('/edit-profile');
+    }
 
     const calculateBMI = (weight, height) => {
         const heightInMeters = height / 100;
@@ -72,7 +77,7 @@ export default function UserCard() {
                     </div>
                 </Box>
             </Stack>
-            <button className="edit-btn">
+            <button className="edit-btn" onClick={handleEditClick}>
                 <EditIcon style={{ marginRight: 5 }} />
                 <span className="edit-btn-text">Edit</span>
             </button>

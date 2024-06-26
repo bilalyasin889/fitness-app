@@ -5,9 +5,10 @@ export const HOSTS = {
 
 export const APPLICATION_URIS = {
     auth: {
-      login: '/auth/login',
-      register: '/auth/register',
-      userInfo: '/user/info',
+        login: '/auth/login',
+        register: '/auth/register',
+        userInfo: '/user/info',
+        updateUserInfo: '/user/update-info',
     },
     exercise: {
         exercises: '/all',
