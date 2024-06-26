@@ -12,18 +12,16 @@ import {
 import Button from "@mui/material/Button";
 import {FormProvider, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import {authApi, register} from "../../utils/http/Auth";
+import {useAuthApi} from "../../utils/http/AuthApi";
 import {FormError} from "../../components/Login/FormError";
 import {CircularProgress} from "@mui/material";
-import {useAuth} from "../../utils/authentication/AuthProvider";
 
 const CreateAccount = () => {
     const methods = useForm()
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = authApi(accessToken, storeToken, removeToken);
+    const {register} = useAuthApi();
     const navigate = useNavigate();
 
     const onSubmit = methods.handleSubmit(async data => {
@@ -31,7 +29,7 @@ const CreateAccount = () => {
         setError(null);
         methods.reset();
 
-        const response = await register(api, data);
+        const response = await register(data);
         if (response.success) {
             navigate('/login');
             setLoading(false);

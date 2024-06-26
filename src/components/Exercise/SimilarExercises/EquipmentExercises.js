@@ -3,22 +3,21 @@ import React, {useEffect, useState} from "react";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
 
 import './SimilarExercises.css';
-import {exerciseApi, getExercisesByEquipment} from "../../../utils/http/exerciseData";
-import {useAuth} from "../../../utils/authentication/AuthProvider";
+import {useExerciseApi} from "../../../utils/http/ExerciseApi";
 
 const EquipmentExercises = ({equipment}) => {
     const [equipmentExercises, setEquipmentExercises] = useState([]);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = exerciseApi(accessToken, storeToken, removeToken);
+    const {getExercisesByEquipment} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const exercises = await getExercisesByEquipment(api, equipment);
+            const exercises = await getExercisesByEquipment(equipment);
             setEquipmentExercises(exercises || []);
         };
 
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [equipment]);
 
     if (!equipmentExercises) {

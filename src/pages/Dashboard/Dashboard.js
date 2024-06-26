@@ -1,25 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
 import {Box} from "@mui/material";
-import {authApi, getUserInfo} from "../../utils/http/Auth";
-import {useAuth} from "../../utils/authentication/AuthProvider";
+import {useAuthApi} from "../../utils/http/AuthApi";
 
 const Dashboard = () => {
     const [userInfo, setUserInfo] = useState({});
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = authApi(accessToken, storeToken, removeToken);
+    const {getUserInfo} = useAuthApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getUserInfo(api);
+            const response = await getUserInfo();
             if (response) {
                 setUserInfo(response);
             }
         }
 
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    if (userInfo === null) {
+        return null;
+    }
 
     return (
         <Box className="page-wrapper" role="main" aria-labelledby="page-heading">

@@ -3,26 +3,25 @@ import React, {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 
 import {bodyPartFilterState} from "../../../../recoil/ExerciseListAtoms";
-import {exerciseApi, getBodyParts} from "../../../../utils/http/exerciseData";
+import {useExerciseApi} from "../../../../utils/http/ExerciseApi";
 
 import './BodyPartFilter.css'
-import {useAuth} from "../../../../utils/authentication/AuthProvider";
 
 const BodyPartFilter = () => {
     const [bodyPartFilter, setBodyPartFilter] = useRecoilState(bodyPartFilterState);
     const [bodyParts, setBodyParts] = useState([]);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = exerciseApi(accessToken, storeToken, removeToken);
+    const {getBodyParts} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const parts = await getBodyParts(api);
+            const parts = await getBodyParts();
             setBodyParts(parts || []);
         };
 
         fetchData();
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (!bodyParts) return null;
 

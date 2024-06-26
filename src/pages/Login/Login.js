@@ -5,8 +5,7 @@ import {email_validation, password_validation} from "../../utils/validation/inpu
 import Button from "@mui/material/Button";
 import {Link, useNavigate} from "react-router-dom";
 import {FormProvider, useForm} from "react-hook-form";
-import {useAuth} from '../../utils/authentication/AuthProvider';
-import {authApi, login} from "../../utils/http/Auth";
+import {useAuthApi} from "../../utils/http/AuthApi";
 import {FormError} from "../../components/Login/FormError";
 import {CircularProgress} from "@mui/material";
 
@@ -15,8 +14,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = authApi(accessToken, storeToken, removeToken);
+    const {login} = useAuthApi();
     const navigate = useNavigate();
 
     const onSubmit = methods.handleSubmit(async data => {
@@ -24,7 +22,7 @@ const Login = () => {
         setError(null);
         methods.reset();
 
-        const response = await login(api, data.email, data.password);
+        const response = await login(data.email, data.password);
         if (response.success) {
             navigate('/dashboard');
             setLoading(false);

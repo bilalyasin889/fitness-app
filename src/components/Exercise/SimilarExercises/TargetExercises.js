@@ -1,23 +1,23 @@
 import {Box, Stack} from "@mui/material";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
 import React, {useEffect, useState} from "react";
+import {useExerciseApi} from "../../../utils/http/ExerciseApi";
+
 import './SimilarExercises.css';
-import {exerciseApi, getExercisesByTargetMuscle} from "../../../utils/http/exerciseData";
-import {useAuth} from "../../../utils/authentication/AuthProvider";
 
 const TargetExercises = ({target}) => {
     const [targetExercises, setTargetExercises] = useState([]);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = exerciseApi(accessToken, storeToken, removeToken);
+    const {getExercisesByTargetMuscle} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const exercises = await getExercisesByTargetMuscle(api, target);
+            const exercises = await getExercisesByTargetMuscle(target);
             setTargetExercises(exercises || []);
         };
 
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [target])
 
     if (!targetExercises) {

@@ -5,26 +5,25 @@ import TargetExercises from "../../components/Exercise/SimilarExercises/TargetEx
 import EquipmentExercises from "../../components/Exercise/SimilarExercises/EquipmentExercises";
 import {LoadingSpinner} from "../../components/LoadingSpinner";
 import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
+import {useExerciseApi} from "../../utils/http/ExerciseApi";
 
 import './ExerciseInfo.css';
-import {exerciseApi, getExerciseById} from "../../utils/http/exerciseData";
-import {useAuth} from "../../utils/authentication/AuthProvider";
 
 const ExerciseInfo = () => {
     const {id} = useParams();
     const [exercise, setExercise] = useState(null);
 
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = exerciseApi(accessToken, storeToken, removeToken);
+    const {getExerciseById} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const exercises = await getExerciseById(api, id);
+            const exercises = await getExerciseById(id);
             setExercise(exercises);
         };
 
         fetchData();
-    }, [id])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
     if (!exercise) return null;
 

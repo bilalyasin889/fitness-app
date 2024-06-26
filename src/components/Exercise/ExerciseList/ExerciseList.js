@@ -4,26 +4,24 @@ import {useSafeSetState} from "../../../utils/SafeState";
 import {exercisesDataState, filteredExercisesState} from "../../../recoil/ExerciseListAtoms";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import React, {useEffect} from "react";
+import {useExerciseApi} from "../../../utils/http/ExerciseApi";
 
 import './ExerciseList.css'
-import {useAuth} from "../../../utils/authentication/AuthProvider";
-import {exerciseApi, getAllExercises} from "../../../utils/http/exerciseData";
 
 const ExerciseList = () => {
     const setExerciseData = useSetRecoilState(exercisesDataState);
-
-    const {accessToken, storeToken, removeToken} = useAuth();
-    const api = exerciseApi(accessToken, storeToken, removeToken);
+    const {getAllExercises} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            let result = await getAllExercises(api)
+            let result = await getAllExercises()
 
             if (!result) setExerciseData([]);
             else setExerciseData(result)
         }
 
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 

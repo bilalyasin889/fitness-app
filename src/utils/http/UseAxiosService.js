@@ -1,6 +1,9 @@
 import axios from 'axios';
+import {useAuth} from "../authentication/AuthProvider";
 
-const AxiosService = (baseURL, accessToken, storeToken, removeToken) => {
+const useAxiosService = (baseURL) => {
+    const {accessToken, storeToken, removeToken} = useAuth();
+
     const axiosInstance = axios.create({
         baseURL,
         headers: {
@@ -35,4 +38,4 @@ const AxiosService = (baseURL, accessToken, storeToken, removeToken) => {
     return axiosInstance;
 };
 
-export default AxiosService;
+export default useAxiosService;
