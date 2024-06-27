@@ -7,41 +7,18 @@ import CustomTooltip from "../../Tooltip/CustomTooltip";
 
 import './FavouriteButton.css';
 
-const FavouriteButton = ({id}) => {
-    const {isFavouriteExercise, addFavouriteExercise, removeFavouriteExercise} = useExerciseApi();
-    const [isSelected, setIsSelected] = useState(null);
+const FavouriteButton = ({id, initialSelection}) => {
+    const {updateFavouriteExercise} = useExerciseApi();
+    const [isSelected, setIsSelected] = useState(initialSelection);
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await isFavouriteExercise(id);
-                if (response.success) {
-                    setIsSelected(response.data);
-                } else {
-                    setError(response.error);
-                }
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
 
     const handleFavouriteClick = async (event) => {
         event.preventDefault();
 
         setLoading(true);
         try {
-            const response = isSelected
-                ? await removeFavouriteExercise(id)
-                : await addFavouriteExercise(id);
+            const response = await updateFavouriteExercise(id, isSelected);
             if (response.success) {
                 setIsSelected(prevState => !prevState);
             } else {

@@ -1,14 +1,18 @@
 import useAxiosService from "./UseAxiosService";
 import {APPLICATION_URIS, HOSTS} from '../../config/applicationUris';
+import {useAuth} from "../authentication/AuthProvider";
 
 const HOST = HOSTS.exercise;
 const API_URIS = APPLICATION_URIS.exercise;
 
 export const useExerciseApi = () => {
     const axiosInstance = useAxiosService(HOST);
+    const {isAuthenticated} = useAuth();
 
     const getAllExercises = async () => {
-        return axiosInstance.get(API_URIS.exercises)
+        return axiosInstance.get(
+            isAuthenticated ? API_URIS.withFavourite.exercises : API_URIS.exercises
+        )
             .then((response) => {
                 console.debug("getAllExercises: Successfully retrieved all exercises.");
                 return response.data;
@@ -44,7 +48,9 @@ export const useExerciseApi = () => {
     };
 
     const getExercisesByTargetMuscle = async (exerciseId, targetMuscle) => {
-        return axiosInstance.get(API_URIS.exercisesByTargetMuscle(targetMuscle))
+        return axiosInstance.get(
+            isAuthenticated ? API_URIS.withFavourite.exercisesByTargetMuscle(targetMuscle) : API_URIS.exercisesByTargetMuscle(targetMuscle)
+        )
             .then((response) => {
                 console.debug(`getExercisesByTargetMuscle: Successfully retrieved exercises for target muscle [${targetMuscle}].`);
                 return getRandomExercises(exerciseId, response.data, 3);
@@ -56,7 +62,9 @@ export const useExerciseApi = () => {
     };
 
     const getExercisesByEquipment = async (exerciseId, equipment) => {
-        return axiosInstance.get(API_URIS.exercisesByEquipment(equipment))
+        return axiosInstance.get(
+            isAuthenticated ? API_URIS.withFavourite.exercisesByEquipment(equipment) : API_URIS.exercisesByEquipment(equipment)
+        )
             .then((response) => {
                 console.debug(`getExercisesByEquipment: Successfully retrieved exercises for equipment [${equipment}].`);
                 return getRandomExercises(exerciseId, response.data, 3);
@@ -74,7 +82,8 @@ export const useExerciseApi = () => {
     }
 
     const getExerciseById = async (id) => {
-        return axiosInstance.get(API_URIS.exerciseById(id))
+        return axiosInstance.get(
+            isAuthenticated ? API_URIS.withFavourite.exerciseById(id) : API_URIS.exerciseById(id))
             .then((response) => {
                 console.debug(`getExerciseById: Successfully retrieved exercise info for id [${id}].`);
                 return response.data;
@@ -97,17 +106,9 @@ export const useExerciseApi = () => {
             });
     };
 
-    const isFavouriteExercise = async (exerciseId) => {
-        return axiosInstance.get(API_URIS.isFavourite(exerciseId))
-            .then((response) => {
-                console.debug(`isFavouriteExercise: Successfully retrieved favourite status for id [${exerciseId}]:`);
-                return {success: true, data: response.data};
-            })
-            .catch((error) => {
-                console.error(`isFavouriteExercise: Error retrieving favourite status for id [${exerciseId}]:`, error.message);
-                return {success: false};
-            });
-    };
+    const updateFavouriteExercise = async (exerciseId, remove) => {
+        return !remove ? addFavouriteExercise(exerciseId) : removeFavouriteExercise(exerciseId);
+    }
 
     const addFavouriteExercise = async (exerciseId) => {
         return axiosInstance.post(API_URIS.addFavourite(exerciseId))
@@ -141,8 +142,6 @@ export const useExerciseApi = () => {
         getExercisesByEquipment,
         getExerciseById,
         getFavourites,
-        isFavouriteExercise,
-        addFavouriteExercise,
-        removeFavouriteExercise
+        updateFavouriteExercise
     };
 };

@@ -5,7 +5,7 @@ import {useExerciseApi} from "../../../utils/http/ExerciseApi";
 
 import './SimilarExercises.css';
 
-const TargetExercises = ({ exerciseId, target}) => {
+const TargetExercises = ({exerciseId, target}) => {
     const [targetExercises, setTargetExercises] = useState(null);
 
     const {getExercisesByTargetMuscle} = useExerciseApi();
@@ -22,25 +22,30 @@ const TargetExercises = ({ exerciseId, target}) => {
 
     if (!targetExercises) {
         return null;
-    } else if (targetExercises.length === 0) {
-        return (
-            <Box mb="40px">
-                <h3 className="no-exercise-found">No exercises found for {target}</h3>
-            </Box>
-        );
     }
 
     return (
-        <Box component="section" aria-labelledby="similar-target-exercises-heading" mb="40px">
-            <h2 id="similar-target-exercises-heading" className="similar-exercises-heading">
+        <>
+            <h2 id="similar-target-exercises-heading" className="heading-level-2 similar-exercises-heading">
                 Other Exercises for <span>{target}</span>:
             </h2>
-            <Stack className="flex-grid similar-exercises-flex-grid" role="list">
-                {targetExercises.map((exercise) => (
-                    <ExerciseCard key={exercise.id} exercise={exercise} role="listitem" />
-                ))}
-            </Stack>
-        </Box>
+            {targetExercises.length === 0 ?
+                (
+                    <h3 className="result-not-found similar-exercises-not-found">No exercises found
+                        for <span>{target}</span></h3>
+                )
+                :
+                (
+                    <Box component="section" aria-labelledby="similar-target-exercises-heading" mb="40px">
+                        <Stack className="flex-grid similar-exercises-flex-grid" role="list">
+                            {targetExercises.map((exercise) => (
+                                <ExerciseCard key={exercise.id} exercise={exercise} role="listitem"/>
+                            ))}
+                        </Stack>
+                    </Box>
+                )
+            }
+        </>
     );
 };
 

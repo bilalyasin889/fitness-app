@@ -24,7 +24,7 @@ const ExerciseCard = ({exercise}) => {
                 <Stack className="card-info-section">
                     <h3 className="exercise-name">{exercise.name}</h3>
                     {isAuthenticated && (
-                        <FavouriteButton id={exercise.id}/>
+                        <FavouriteButton id={exercise.id} initialSelection={exercise.isFavorite}/>
                     )}
                     <Box mb="15px">
                         <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
@@ -45,6 +45,7 @@ ExerciseCard.propTypes = {
         bodyPart: PropTypes.string.isRequired,
         equipment: PropTypes.string.isRequired,
         targetMuscle: PropTypes.string.isRequired,
+        isFavorite: PropTypes.bool
     }).isRequired
 };
 
