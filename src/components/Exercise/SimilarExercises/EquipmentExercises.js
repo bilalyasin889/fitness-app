@@ -1,24 +1,24 @@
 import {Box, Stack} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import ExerciseCard from "../ExerciseCard/ExerciseCard";
-
-import './SimilarExercises.css';
 import {useExerciseApi} from "../../../utils/http/ExerciseApi";
 
-const EquipmentExercises = ({equipment}) => {
-    const [equipmentExercises, setEquipmentExercises] = useState([]);
+import './SimilarExercises.css';
+
+const EquipmentExercises = ({exerciseId, equipment}) => {
+    const [equipmentExercises, setEquipmentExercises] = useState(null);
 
     const {getExercisesByEquipment} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const exercises = await getExercisesByEquipment(equipment);
+            const exercises = await getExercisesByEquipment(exerciseId, equipment);
             setEquipmentExercises(exercises || []);
         };
 
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [equipment]);
+    }, [exerciseId, equipment]);
 
     if (!equipmentExercises) {
         return null;

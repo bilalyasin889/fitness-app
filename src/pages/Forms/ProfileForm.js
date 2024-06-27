@@ -2,7 +2,6 @@ import React, {useLayoutEffect, useState} from 'react';
 import {Input} from "../../components/Login/Input";
 import {height_validation, name_validation, weight_validation} from "../../utils/validation/inputValidations";
 import {useAuthApi} from "../../utils/http/AuthApi";
-import './ProfileForm.css';
 import FormWrapper from "../../components/Form/FormWrapper";
 
 const ProfileForm = () => {

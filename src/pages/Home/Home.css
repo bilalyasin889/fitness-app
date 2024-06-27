@@ -4,14 +4,3 @@
     object-fit: fill !important;
     border-radius: 30px;
 }
-
-.exercise-btn {
-    margin-top: 20px !important;
-    text-decoration: none !important;
-    width: 200px;
-    text-align: center;
-    color: white !important;
-    font-size: 18px !important;
-    text-transform: none !important;
-    border-radius: 4px !important;
-}

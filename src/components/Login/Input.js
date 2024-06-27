@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {FormError} from "./FormError";
 
 import './Input.css';
-import {FormError} from "./FormError";
 
 function findInputError(errors, name) {
     return Object.keys(errors)

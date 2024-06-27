@@ -2,13 +2,15 @@ import {Link} from "react-router-dom";
 import {Box, Divider, Stack} from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
-
 import InfoPill from "../InfoPill/InfoPill";
+import {useAuth} from "../../../utils/authentication/AuthProvider";
+import FavouriteButton from "../FavouriteButton/FavouriteButton";
 
 import icon from './../../../assets/images/gym.png'
 import './ExerciseCard.css';
 
 const ExerciseCard = ({exercise}) => {
+    const {isAuthenticated} = useAuth();
     return (
         <Link className="exercise-card-link" to={`/exercise/${exercise.id}`} aria-label={exercise.name}>
             <Box className="exercise-card">
@@ -21,6 +23,9 @@ const ExerciseCard = ({exercise}) => {
                 <Divider orientation="vertical" variant="middle" flexItem aria-hidden="true"/>
                 <Stack className="card-info-section">
                     <h3 className="exercise-name">{exercise.name}</h3>
+                    {isAuthenticated && (
+                        <FavouriteButton id={exercise.id}/>
+                    )}
                     <Box mb="15px">
                         <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
                         <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.targetMuscle}/>

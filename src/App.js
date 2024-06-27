@@ -4,16 +4,16 @@ import Navbar from "./components/Navbar/Navbar";
 import React, {lazy} from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {LoadingSpinner} from "./components/LoadingSpinner";
-import {ProtectedRoute} from "./utils/ProtectedRoute";
+import {ProtectedRoute} from "./components/ProtectedRoute";
 import {AuthProvider} from "./utils/authentication/AuthProvider";
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Exercises = lazy(() => import('./pages/Exercises/Exercises'));
 const ExerciseInfo = lazy(() => import('./pages/ExerciseInfo/ExerciseInfo'));
-const Login = lazy(() => import('./pages/Login/Login'));
-const CreateAccount = lazy(() => import('./pages/Login/CreateAccount'));
+const Login = lazy(() => import('./pages/Forms/Login'));
+const CreateAccount = lazy(() => import('./pages/Forms/CreateAccount'));
+const ProfileForm = lazy(() => import('./pages/Forms/ProfileForm'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
-const ProfileForm = lazy(() => import('./pages/Dashboard/ProfileForm'));
 
 
 function App() {

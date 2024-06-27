@@ -5,20 +5,20 @@ import {useExerciseApi} from "../../../utils/http/ExerciseApi";
 
 import './SimilarExercises.css';
 
-const TargetExercises = ({target}) => {
-    const [targetExercises, setTargetExercises] = useState([]);
+const TargetExercises = ({ exerciseId, target}) => {
+    const [targetExercises, setTargetExercises] = useState(null);
 
     const {getExercisesByTargetMuscle} = useExerciseApi();
 
     useEffect(() => {
         const fetchData = async () => {
-            const exercises = await getExercisesByTargetMuscle(target);
+            const exercises = await getExercisesByTargetMuscle(exerciseId, target);
             setTargetExercises(exercises || []);
         };
 
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [target])
+    }, [exerciseId, target])
 
     if (!targetExercises) {
         return null;

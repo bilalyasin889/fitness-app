@@ -21,7 +21,7 @@ const Home = () => {
                     Whether you're a newbie or a fitness buff, we have exercises for all levels, with easy step-by-step guides.
                 </p>
                 <Stack>
-                    <Button variant="contained" component={Link} to="/exercises" className="exercise-btn">Browse Exercises</Button>
+                    <Button variant="contained" component={Link} to="/exercises" className="browse-exercise-btn">Browse Exercises</Button>
                 </Stack>
             </Box>
         </Box>

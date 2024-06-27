@@ -3,12 +3,12 @@ import React, {useEffect, useState} from "react";
 import {useAuthApi} from "../../utils/http/AuthApi";
 import EditIcon from '@mui/icons-material/Edit';
 import PersonIcon from '@mui/icons-material/Person';
-
-import './UserCard.css'
 import {useNavigate} from "react-router-dom";
 
+import './UserCard.css'
+
 export default function UserCard() {
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
     const {getUserInfo} = useAuthApi();
 

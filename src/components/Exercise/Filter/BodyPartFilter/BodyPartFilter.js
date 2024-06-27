@@ -9,7 +9,7 @@ import './BodyPartFilter.css'
 
 const BodyPartFilter = () => {
     const [bodyPartFilter, setBodyPartFilter] = useRecoilState(bodyPartFilterState);
-    const [bodyParts, setBodyParts] = useState([]);
+    const [bodyParts, setBodyParts] = useState(null);
 
     const {getBodyParts} = useExerciseApi();
 
@@ -27,7 +27,7 @@ const BodyPartFilter = () => {
 
     return (
         <Box component="div" role="region" aria-labelledby="filter-heading" position="relative" mr="40px" ml="40px"
-             mb="10px">
+             mb="35px">
             <h2 id="filter-heading" className="filter-heading">Filter by body part:</h2>
             <ToggleButtonGroup
                 className="selection-container"

@@ -3,6 +3,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 import {CircularProgress} from '@mui/material';
 import {FormError} from "../Login/FormError";
+
 import './FormWrapper.css';
 
 const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, dataFetchFailure}) => {
@@ -14,10 +15,6 @@ const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, d
     const handleSubmit = async (data) => {
         setLoading(true);
         setError(null);
-        methods.reset({
-            password: '',
-            confirmPassword: ''
-        });
 
         try {
             const response = await onSubmit(data);
@@ -29,6 +26,10 @@ const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, d
         } catch (error) {
             setError(error.message);
         } finally {
+            methods.reset({
+                password: '',
+                confirmPassword: ''
+            });
             setLoading(false);
         }
     };

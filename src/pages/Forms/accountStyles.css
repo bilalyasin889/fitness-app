@@ -1,17 +1,17 @@
 .create-account-link {
     margin-bottom: 30px;
     margin-top: 1rem;
-    font-size: 0.875rem; /* Text-sm */
+    font-size: 0.875rem;
     text-align: center;
 }
 
 .create-account-link a {
-    color: #3b82f6; /* Blue-500 */
+    color: #3b82f6;
     text-decoration: none;
-    font-weight: 600; /* Font-semibold */
+    font-weight: 600;
     transition: color 0.2s;
 }
 
 .create-account-link a:hover {
-    color: #2563eb; /* Blue-600 */
+    color: #2563eb;
 }

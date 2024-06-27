@@ -19,11 +19,11 @@ export const filteredExercisesState = selector({
     key: 'filteredExercisesState',
     get: async ({get}) => {
         let exerciseData = get(exercisesDataState);
-        const bodyPartFilter = get(bodyPartFilterState).toLowerCase();
-        const search = get(searchFilterState).toLowerCase();
-
         if (!exerciseData) return null;
         if (exerciseData.length === 0) return [];
+
+        const bodyPartFilter = get(bodyPartFilterState).toLowerCase();
+        const search = get(searchFilterState).toLowerCase();
 
         if (bodyPartFilter !== 'all')
             exerciseData = exerciseData.filter(item => item.bodyPart.toLowerCase() === bodyPartFilter)

@@ -7,8 +7,8 @@
     text-decoration: none;
     height: 100%;
     overflow: hidden;
-    flex: 0 450px;
     width: 80vw;
+    margin-bottom: 20px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -29,7 +29,6 @@
     display: flex;
     flex-direction: column;
 }
-
 
 .user-name {
     font-weight: bold;
@@ -54,6 +53,7 @@
 .row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
@@ -64,11 +64,11 @@
 }
 
 .good-bmi {
-    color: #00cc00; /* Green color for good BMI */
+    color: #00cc00;
 }
 
 .bad-bmi {
-    color: #cc0000; /* Red color for bad BMI */
+    color: #cc0000;
 }
 
 .edit-btn {
