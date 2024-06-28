@@ -24,7 +24,8 @@ const CreateAccount = () => {
             title="Create Account"
             btnText="Create"
             navigateUrl="/login"
-            onSubmit={onSubmit}>
+            onSubmit={onSubmit}
+            successMessage="Account created successfully! Redirecting you to the login page...">
             <div className="form-input-wrapper">
                 <Input {...name_validation} />
                 <Input {...email_validation} />

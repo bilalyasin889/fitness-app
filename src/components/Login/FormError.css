@@ -1,8 +1,7 @@
 .error-message {
     display: flex;
     align-items: center;
-    font-size: 14px;
-    width: 100%;
+    font-size: 16px;
     gap: 0.25rem;
     padding: 0.5rem;
     margin-top: 10px;
@@ -10,6 +9,10 @@
     color: #ef4444;
     background-color: #fee2e2;
     border-radius: 0.375rem;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .error-icon {

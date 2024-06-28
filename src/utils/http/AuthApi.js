@@ -48,7 +48,7 @@ export const useAuthApi = () => {
         return axiosInstance.get(API_URIS.userInfo)
             .then((response) => {
                 console.debug("userInfo: User Info successfully retrieved.");
-                return response.data;
+                return {success: true, data: response.data};
             })
             .catch((error) => {
                 console.error("userInfo: Error retrieving user info: ", error.message);

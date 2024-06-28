@@ -6,30 +6,46 @@ import {FormError} from "../Login/FormError";
 
 import './FormWrapper.css';
 
-const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, dataFetchFailure}) => {
+const FormWrapper = ({
+                         children,
+                         title,
+                         btnText,
+                         navigateUrl,
+                         onSubmit,
+                         footer,
+                         successMessage,
+                         dataFetchFailure
+                     }) => {
     const methods = useForm();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (data) => {
         setLoading(true);
         setError(null);
+        setShowSuccessMessage(false);
 
         try {
             const response = await onSubmit(data);
             if (response.success) {
-                navigate(navigateUrl);
+                setShowSuccessMessage(true);
+                setTimeout(() => {
+                    navigate(navigateUrl);
+                }, 2000);
             } else {
                 setError(response.error);
             }
         } catch (error) {
             setError(error.message);
         } finally {
-            methods.reset({
-                password: '',
-                confirmPassword: ''
-            });
+            if (!showSuccessMessage) {
+                methods.reset({
+                    'password': '',
+                    'confirm-password': ''
+                });
+            }
             setLoading(false);
         }
     };
@@ -58,6 +74,13 @@ const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, d
                                         <FormError message={error}/>
                                     </div>
                                 )}
+
+                                {showSuccessMessage && successMessage && (
+                                    <div className="form-success">
+                                        <p>{successMessage}</p>
+                                    </div>
+                                )}
+
                                 <div className="form-btn-wrapper">
                                     <button
                                         type="submit"

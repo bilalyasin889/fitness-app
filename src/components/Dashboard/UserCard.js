@@ -15,8 +15,8 @@ export default function UserCard() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await getUserInfo();
-            if (response) {
-                setUserInfo(response);
+            if (response.success) {
+                setUserInfo(response.data);
             }
         }
 

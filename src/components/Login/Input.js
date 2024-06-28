@@ -56,7 +56,7 @@ export const Input = ({
                 className={`input-field ${isInvalid ? 'invalid' : ''}`}
             />
             {isInvalid && (
-                <FormError message={inputErrors.error.message}/>
+                <FormError message={inputErrors.error.message} fullWidth={true}/>
             )}
         </div>
     );

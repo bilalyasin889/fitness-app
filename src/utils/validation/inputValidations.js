@@ -73,6 +73,7 @@ export const confirm_password_validation = {
     type: 'password',
     id: 'confirm-password',
     placeholder: 'Confirm Password',
+    autocomplete: 'new-password',
     validation: {
         required: {
             value: true,

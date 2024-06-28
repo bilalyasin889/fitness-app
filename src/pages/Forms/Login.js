@@ -25,6 +25,7 @@ const Login = () => {
             btnText="Login"
             navigateUrl="/dashboard"
             onSubmit={onSubmit}
+            successMessage="Logged in successfully! Redirecting you to your dashboard..."
             footer={footer}>
             <div className="form-input-wrapper">
                 <Input {...email_validation} />

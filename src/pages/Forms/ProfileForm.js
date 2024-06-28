@@ -18,13 +18,17 @@ const ProfileForm = () => {
         const fetchData = async () => {
             try {
                 const response = await getUserInfo();
-                if (response) {
+                if (response.success) {
+                    const data = response.data;
                     setUser({
-                        name: response.name,
-                        email: response.email,
-                        weight: response.weight,
-                        height: response.height
+                        name: data.name,
+                        email: data.email,
+                        weight: data.weight,
+                        height: data.height
                     });
+                } else {
+                    setError("Error retrieving profile data, please refresh page. " +
+                        "If error persists, please contact support.");
                 }
             } catch (error) {
                 console.error("Error retrieving profile data: " + error.message)
@@ -41,12 +45,15 @@ const ProfileForm = () => {
         return await updateUserInfo(user.email, data);
     };
 
+    if (user.name === '') return null
+
     return (
         <FormWrapper
             title="Edit Profile"
             btnText="Update"
             navigateUrl="/dashboard"
             onSubmit={onSubmit}
+            successMessage="Profile updated successfully!"
             dataFetchFailure={error}>
             <div className="form-input-wrapper">
                 <Input {...name_validation} value={user.name}/>
