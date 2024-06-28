@@ -11,6 +11,7 @@ import './ExerciseCard.css';
 
 const ExerciseCard = ({exercise}) => {
     const {isAuthenticated} = useAuth();
+
     return (
         <Link className="exercise-card-link" to={`/exercise/${exercise.id}`} aria-label={exercise.name}>
             <Box className="exercise-card">

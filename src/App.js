@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {LoadingSpinner} from "./components/LoadingSpinner";
 import {ProtectedRoute} from "./components/ProtectedRoute";
 import {AuthProvider} from "./utils/authentication/AuthProvider";
+import ScrollToTop from "./components/ScrollToTop";
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Exercises = lazy(() => import('./pages/Exercises/Exercises'));
@@ -20,6 +21,7 @@ function App() {
 
     return (
         <BrowserRouter>
+            <ScrollToTop/>
             <AuthProvider>
                 <Box m="auto">
                     <Navbar/>
