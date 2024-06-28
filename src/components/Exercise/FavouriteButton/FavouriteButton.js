@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {CircularProgress} from "@mui/material";
@@ -12,6 +12,11 @@ const FavouriteButton = ({id, initialSelection}) => {
     const [isSelected, setIsSelected] = useState(initialSelection);
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setIsSelected(initialSelection);
+        setError(null);
+    }, [id, initialSelection]);
 
     const handleFavouriteClick = async (event) => {
         event.preventDefault();
