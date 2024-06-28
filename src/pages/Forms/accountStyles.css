@@ -6,12 +6,12 @@
 }
 
 .create-account-link a {
-    color: #3b82f6;
+    color: blue;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
 }
 
 .create-account-link a:hover {
-    color: #2563eb;
+    color: dodgerblue;
 }

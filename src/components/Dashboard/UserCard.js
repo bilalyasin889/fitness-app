@@ -48,10 +48,10 @@ export default function UserCard() {
 
         return (
             <div className="bmi-info">
-                <h5 className="bmi">
+                <h3 className="bmi">
                     <span className="label">BMI:</span>
                     <span className={`${bmiClass}`}>{bmi} - {bmiStatus}</span>
-                </h5>
+                </h3>
             </div>
         );
     };
@@ -67,12 +67,12 @@ export default function UserCard() {
             </Avatar>
             <Divider orientation="vertical" variant="middle" flexItem aria-hidden="true"/>
             <Stack className="user-info-section">
-                <h3 className="user-name">{userInfo.name}</h3>
+                <h1 className="user-name">{userInfo.name}</h1>
                 <Box className="user-attributes">
-                    <h5><span className="label">Email:</span> {userInfo.email}</h5>
+                    <h2><span className="label">Email:</span> {userInfo.email}</h2>
                     <div className="row">
-                        <h5><span className="label">Weight:</span> {userInfo.weight} kg</h5>
-                        <h5><span className="label">Height:</span> {userInfo.height} cm</h5>
+                        <h2><span className="label">Weight:</span> {userInfo.weight} kg</h2>
+                        <h3><span className="label">Height:</span> {userInfo.height} cm</h3>
                         {renderBMIInfo()}
                     </div>
                 </Box>

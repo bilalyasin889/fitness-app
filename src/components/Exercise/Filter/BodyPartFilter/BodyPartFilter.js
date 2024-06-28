@@ -33,7 +33,7 @@ const BodyPartFilter = () => {
                 className="selection-container"
                 value={bodyPartFilter}
                 exclusive
-                onChange={(e, newValue) => newValue && setBodyPartFilter(newValue)}
+                onChange={(e, newValue) => setBodyPartFilter(newValue || 'all')}
                 aria-label="Body Parts button group"
             >
                 {bodyParts.map((option) => (

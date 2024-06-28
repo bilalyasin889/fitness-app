@@ -44,6 +44,12 @@
     gap: 15px;
 }
 
+.user-attributes h2,
+.user-attributes h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
 .label {
     font-weight: bold;
     font-size: 20px;
@@ -64,15 +70,15 @@
 }
 
 .good-bmi {
-    color: #00cc00;
+    color: #006400;
 }
 
 .bad-bmi {
-    color: #cc0000;
+    color: #990000;
 }
 
 .edit-btn {
-    background-color: #007bff;
+    background-color: blue;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -87,7 +93,7 @@
 }
 
 .edit-btn:hover {
-    background-color: #0056b3;
+    background-color: dodgerblue;
 }
 
 @media (max-width: 599px) {

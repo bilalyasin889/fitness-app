@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {CircularProgress} from "@mui/material";
@@ -32,24 +32,23 @@ const FavouriteButton = ({id, initialSelection}) => {
     };
 
     return (
-        <button
-            className="favorite-button"
-            onClick={handleFavouriteClick}
-            disabled={loading || error !== null}>
-            {loading ? (
-                <CircularProgress className="loading-spinner" size={24}/>
-            ) : (
-                isSelected ? (
-                    <CustomTooltip title="Remove from favourites">
-                        <FavoriteIcon/>
-                    </CustomTooltip>
+        <CustomTooltip title={isSelected ? "Remove from favourites" : "Add to favourites"}>
+            <button
+                className="favorite-button"
+                onClick={handleFavouriteClick}
+                disabled={loading || error !== null}
+                aria-label={isSelected ? "Remove from favourites" : "Add to favourites"}>
+                {loading ? (
+                    <CircularProgress className="loading-spinner" size={24}/>
                 ) : (
-                    <CustomTooltip title="Add to favourites">
+                    isSelected ? (
+                        <FavoriteIcon/>
+                    ) : (
                         <FavoriteBorderIcon/>
-                    </CustomTooltip>
-                )
-            )}
-        </button>
+                    )
+                )}
+            </button>
+        </CustomTooltip>
     );
 };
 

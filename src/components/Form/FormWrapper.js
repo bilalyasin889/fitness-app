@@ -36,8 +36,8 @@ const FormWrapper = ({children, title, btnText, navigateUrl, onSubmit, footer, d
 
     return (
         <div className="form-page-wrapper">
-            <div className="form">
-                <h4 className="title">{title}</h4>
+            <div className="form" role="main">
+                <h1 className="title">{title}</h1>
                 {dataFetchFailure ?
                     (
                         <div className="form-error">
