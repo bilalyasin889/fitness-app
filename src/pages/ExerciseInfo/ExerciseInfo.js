@@ -1,31 +1,42 @@
 import {Box, Stack} from "@mui/material";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-
-import {exerciseIdState, exerciseState} from "../../recoil/ExerciseInfoAtoms";
 import TargetExercises from "../../components/Exercise/SimilarExercises/TargetExercises";
 import EquipmentExercises from "../../components/Exercise/SimilarExercises/EquipmentExercises";
 import {LoadingSpinner} from "../../components/LoadingSpinner";
 import InfoPill from "../../components/Exercise/InfoPill/InfoPill";
+import {useExerciseApi} from "../../utils/http/ExerciseApi";
+import FavouriteButton from "../../components/Exercise/FavouriteButton/FavouriteButton";
+import {useAuth} from "../../utils/authentication/AuthProvider";
 
 import './ExerciseInfo.css';
 
 const ExerciseInfo = () => {
     const {id} = useParams();
-    const setExerciseId = useSetRecoilState(exerciseIdState);
+    const {isAuthenticated} = useAuth();
+    const [exercise, setExercise] = useState(null);
+
+    const {getExerciseById} = useExerciseApi();
 
     useEffect(() => {
-        setExerciseId(id);
-    }, [id, setExerciseId]);
+        const fetchData = async () => {
+            const exercises = await getExerciseById(id);
+            setExercise(exercises);
+        };
 
-    const exercise = useRecoilValue(exerciseState);
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
+
     if (!exercise) return null;
 
     return (
         <Box className="page-wrapper" role="main">
-            <Box className="page-tile">
-                <h1>{exercise.name}</h1>
+            <Box className="page-tile exercise-title">
+                <h1 className="exercise-info-name">{exercise.name}</h1>
+                {isAuthenticated && (
+                    <FavouriteButton id={id} initialSelection={exercise.isFavorite}/>
+                )}
                 <Box aria-label="Exercise Information" role="region">
                     <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
                     <InfoPill tooltipTitle="Target Muscle" buttonText={exercise.targetMuscle}/>
@@ -49,11 +60,11 @@ const ExerciseInfo = () => {
             </Stack>
 
             <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Target Exercises"/>}>
-                <TargetExercises target={exercise.targetMuscle}/>
+                <TargetExercises exerciseId={id} target={exercise.targetMuscle}/>
             </React.Suspense>
 
             <React.Suspense fallback={<LoadingSpinner role="status" aria-label="Loading Similar Equipment Exercises"/>}>
-                <EquipmentExercises equipment={exercise.equipment}/>
+                <EquipmentExercises exerciseId={id} equipment={exercise.equipment}/>
             </React.Suspense>
         </Box>
     );

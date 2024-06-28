@@ -1,0 +1,17 @@
+/* Specific Styles for Exercise Flex Grid */
+.exercises-flex-grid {
+    padding-right: 30px;
+    padding-left: 30px;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+@media (min-width: 992px) {
+    .exercises-flex-grid {
+        gap: 20px;
+    }
+
+    .pagination-top {
+        display: none;
+    }
+}

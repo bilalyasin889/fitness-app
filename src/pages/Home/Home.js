@@ -8,9 +8,9 @@ import BannerImage from "../../assets/images/Banner.jpg"
 
 const Home = () => {
     return (
-        <Box className="page-wrapper" role="main" aria-labelledby="workout-heading">
+        <Box className="page-wrapper" role="main" aria-labelledby="page-heading">
             <Box className="page-tile">
-                <h1 id="workout-heading">Plan your next workout here</h1>
+                <h1 id="page-heading">Plan your next workout here</h1>
             </Box>
             <Box position="relative">
                 <img className="banner" style={{objectFit: 'contain'}} src={BannerImage} alt="Weight lifting workout banner"/>
@@ -21,7 +21,7 @@ const Home = () => {
                     Whether you're a newbie or a fitness buff, we have exercises for all levels, with easy step-by-step guides.
                 </p>
                 <Stack>
-                    <Button variant="contained" component={Link} to="/exercises" className="exercise-btn">Browse Exercises</Button>
+                    <Button variant="contained" component={Link} to="/exercises" className="browse-exercise-btn">Browse Exercises</Button>
                 </Stack>
             </Box>
         </Box>

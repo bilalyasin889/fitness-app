@@ -18,8 +18,9 @@ body {
 }
 
 .page-wrapper {
-    display: grid;
-    place-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0 0 72px;
     padding: 20px;
 }
@@ -37,6 +38,23 @@ body {
         margin-bottom: 15px;
         margin-top: 0;
     }
+}
+
+.result-not-found {
+    font-size: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.heading-level-2 {
+    align-self: flex-start;
+    text-transform: capitalize;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    color: #FF2625;
 }
 
 p {
@@ -58,4 +76,16 @@ p {
     .flex-grid {
         flex-direction: row !important;
     }
+}
+
+
+.browse-exercise-btn {
+    margin-top: 20px !important;
+    text-decoration: none !important;
+    width: 200px;
+    text-align: center;
+    color: white !important;
+    font-size: 18px !important;
+    text-transform: none !important;
+    border-radius: 4px !important;
 }

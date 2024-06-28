@@ -1,33 +1,52 @@
 import './App.css';
 import {Box} from "@mui/material";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import React, {lazy} from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {LoadingSpinner} from "./components/LoadingSpinner";
+import {ProtectedRoute} from "./components/ProtectedRoute";
+import {AuthProvider} from "./utils/authentication/AuthProvider";
+import ScrollToTop from "./components/ScrollToTop";
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Exercises = lazy(() => import('./pages/Exercises/Exercises'));
 const ExerciseInfo = lazy(() => import('./pages/ExerciseInfo/ExerciseInfo'));
+const Login = lazy(() => import('./pages/Forms/Login'));
+const CreateAccount = lazy(() => import('./pages/Forms/CreateAccount'));
+const ProfileForm = lazy(() => import('./pages/Forms/ProfileForm'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+
 
 function App() {
+
     return (
         <BrowserRouter>
-            <Box m="auto">
-                <Navbar/>
-                <Box flexGrow={1}>
-                    <React.Suspense fallback={
-                        <div className="fallback-loading">
-                            <LoadingSpinner role="status" aria-label="Loading Page"/>
-                        </div>
-                    }>
-                        <Routes>
-                            <Route path="/" element={<Home/>}/>
-                            <Route path="/exercises" element={<Exercises/>}/>
-                            <Route path="/exercise/:id" element={<ExerciseInfo/>}/>
-                        </Routes>
-                    </React.Suspense>
+            <ScrollToTop/>
+            <AuthProvider>
+                <Box m="auto">
+                    <Navbar/>
+                    <Box flexGrow={1}>
+                        <React.Suspense fallback={
+                            <div className="fallback-loading">
+                                <LoadingSpinner role="status" aria-label="Loading Page"/>
+                            </div>
+                        }>
+                            <Routes>
+                                <Route path="/" element={<Home/>}/>
+                                <Route path="/exercises" element={<Exercises/>}/>
+                                <Route path="/exercise/:id" element={<ExerciseInfo/>}/>
+                                <Route path="/login" element={<Login/>}/>
+                                <Route path="/create-account" element={<CreateAccount/>}/>
+
+                                <Route element={<ProtectedRoute/>}>
+                                    <Route path="/dashboard" element={<Dashboard/>}/>
+                                    <Route path="/edit-profile" element={<ProfileForm/>}/>
+                                </Route>
+                            </Routes>
+                        </React.Suspense>
+                    </Box>
                 </Box>
-            </Box>
+            </AuthProvider>
         </BrowserRouter>
     );
 }

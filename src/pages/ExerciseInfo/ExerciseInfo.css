@@ -1,3 +1,11 @@
+.exercise-title {
+    width: 80vw;
+}
+
+.exercise-info-name {
+    max-width: 68vw;
+}
+
 .exercise-img-wrapper {
     align-items: center;
     justify-content: center;
@@ -17,8 +25,8 @@
 }
 
 .instructions-list {
+    width: 80vw;
     padding-left: 10px;
-    max-width: 80vw;
     font-size: 20px;
     display: flex;
     flex-direction: column;

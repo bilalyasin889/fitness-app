@@ -1,34 +1,39 @@
 import {Box, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import React from "react";
-import {selector, useRecoilState, useRecoilValue} from "recoil";
+import React, {useEffect, useState} from "react";
+import {useRecoilState} from "recoil";
 
 import {bodyPartFilterState} from "../../../../recoil/ExerciseListAtoms";
-import {getBodyParts} from "../../../../utils/http/exerciseData";
+import {useExerciseApi} from "../../../../utils/http/ExerciseApi";
 
 import './BodyPartFilter.css'
 
-const bodyPartsQuery = selector({
-    key: 'bodyPartsQuery',
-    get: async () => {
-        return await getBodyParts();
-    },
-});
-
 const BodyPartFilter = () => {
     const [bodyPartFilter, setBodyPartFilter] = useRecoilState(bodyPartFilterState);
-    const bodyParts = useRecoilValue(bodyPartsQuery);
+    const [bodyParts, setBodyParts] = useState(null);
+
+    const {getBodyParts} = useExerciseApi();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const parts = await getBodyParts();
+            setBodyParts(parts || []);
+        };
+
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (!bodyParts) return null;
 
     return (
         <Box component="div" role="region" aria-labelledby="filter-heading" position="relative" mr="40px" ml="40px"
-             mb="10px">
+             mb="35px">
             <h2 id="filter-heading" className="filter-heading">Filter by body part:</h2>
             <ToggleButtonGroup
                 className="selection-container"
                 value={bodyPartFilter}
                 exclusive
-                onChange={(e, newValue) => newValue && setBodyPartFilter(newValue)}
+                onChange={(e, newValue) => setBodyPartFilter(newValue || 'all')}
                 aria-label="Body Parts button group"
             >
                 {bodyParts.map((option) => (

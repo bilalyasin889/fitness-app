@@ -1,0 +1,17 @@
+.create-account-link {
+    margin-bottom: 30px;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.create-account-link a {
+    color: blue;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.create-account-link a:hover {
+    color: dodgerblue;
+}

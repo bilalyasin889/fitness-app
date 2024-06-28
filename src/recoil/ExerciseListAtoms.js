@@ -2,7 +2,7 @@ import {atom, selector} from 'recoil';
 
 export const exercisesDataState = atom({
     key: 'exercisesDataState',
-    default: [],
+    default: null,
 });
 
 export const searchFilterState = atom({
@@ -19,10 +19,11 @@ export const filteredExercisesState = selector({
     key: 'filteredExercisesState',
     get: async ({get}) => {
         let exerciseData = get(exercisesDataState);
+        if (!exerciseData) return null;
+        if (exerciseData.length === 0) return [];
+
         const bodyPartFilter = get(bodyPartFilterState).toLowerCase();
         const search = get(searchFilterState).toLowerCase();
-
-        if (!exerciseData || exerciseData.length === 0) return [];
 
         if (bodyPartFilter !== 'all')
             exerciseData = exerciseData.filter(item => item.bodyPart.toLowerCase() === bodyPartFilter)
