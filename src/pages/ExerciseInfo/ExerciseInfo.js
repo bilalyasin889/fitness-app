@@ -35,7 +35,7 @@ const ExerciseInfo = () => {
             <Box className="page-tile exercise-title">
                 <h1 className="exercise-info-name">{exercise.name}</h1>
                 {isAuthenticated && (
-                    <FavouriteButton id={id} initialSelection={exercise.isFavorite}/>
+                    <FavouriteButton id={id} initialSelection={exercise.favorite}/>
                 )}
                 <Box aria-label="Exercise Information" role="region">
                     <InfoPill tooltipTitle="Body Part" buttonText={exercise.bodyPart}/>
